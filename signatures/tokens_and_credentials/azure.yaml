@@ -47,7 +47,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed API done for Azure
+    description: Detects exposed API tokens for Azure
     severity: "70"
     notes:
     references:

@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-10-12"
-    description: Detects exposed PagerDuty API OAuth done
+    description: Detects exposed PagerDuty API OAuth tokens
     severity: "90"
     watchman_apps:
       slack_std:

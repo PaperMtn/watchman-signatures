@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed Twitter API done
+    description: Detects exposed Twitter API tokens
     severity: "90"
     notes:
     references:

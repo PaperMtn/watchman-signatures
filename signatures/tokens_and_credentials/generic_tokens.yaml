@@ -219,7 +219,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-10-12"
-    description: Detects exposed X-Auth done
+    description: Detects exposed X-Auth tokens
     severity: "70"
     notes:
     references:

@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed API done for various Google services
+    description: Detects exposed API tokens for various Google services
     severity: "70"
     watchman_apps:
       slack_std:

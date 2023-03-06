@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2020-10-21"
-    description: Detects exposed Twilio API done
+    description: Detects exposed Twilio API tokens
     severity: "70"
     notes:
     references:

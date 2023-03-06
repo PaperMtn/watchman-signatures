@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed AWS API secret done
+    description: Detects exposed AWS API secret tokens
     severity: "90"
     watchman_apps:
       slack_std:

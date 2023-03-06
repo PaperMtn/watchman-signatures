@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed Slack API done
+    description: Detects exposed Slack API tokens
     severity: "70"
     watchman_apps:
       slack_std:

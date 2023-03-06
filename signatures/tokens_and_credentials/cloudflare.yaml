@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2020-10-26"
-    description: Detects exposed Cloudflare API done
+    description: Detects exposed Cloudflare API tokens
     severity: "70"
     notes:
     references:

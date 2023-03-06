@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-10-12"
-    description: Detects exposed Snyk API OAuth done
+    description: Detects exposed Snyk API OAuth tokens
     severity: "90"
     notes:
     references:

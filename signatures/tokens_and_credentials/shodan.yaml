@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2020-10-26"
-    description: Detects exposed Shodan API done
+    description: Detects exposed Shodan API tokens
     severity: "70"
     watchman_apps:
       slack_std:

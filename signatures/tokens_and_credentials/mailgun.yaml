@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2020-10-21"
-    description: Detects exposed Mailgun API done
+    description: Detects exposed Mailgun API tokens
     severity: "70"
     notes:
     references:

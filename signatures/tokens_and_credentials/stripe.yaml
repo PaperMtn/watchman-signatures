@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2020-10-21"
-    description: Detects exposed Stripe API done
+    description: Detects exposed Stripe API tokens
     severity: "70"
     notes:
     references:

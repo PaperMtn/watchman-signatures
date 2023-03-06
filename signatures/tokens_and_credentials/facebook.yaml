@@ -6,7 +6,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed Facebook API access done
+    description: Detects exposed Facebook API access tokens
     severity: "70"
     notes:
     references:
@@ -61,7 +61,7 @@ signatures:
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
-    description: Detects exposed Facebook API secret done
+    description: Detects exposed Facebook API secret tokens
     severity: "90"
     notes:
     references:
