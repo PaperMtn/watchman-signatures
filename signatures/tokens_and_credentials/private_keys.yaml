@@ -1,0 +1,64 @@
+---
+filename: private_keys.yaml
+signatures:
+
+  - name: PGP Private Keys
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed PGP private keys
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - "BEGIN PGP PRIVATE KEY BLOCK"
+          - "BEGIN RSA PRIVATE KEY"
+          - "BEGIN DSA PRIVATE"
+          - "BEGIN EC PRIVATE"
+          - "BEGIN OPENSSH PRIVATE"
+          - "BEGIN RSA PRIVATE"
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "BEGIN PGP PRIVATE KEY BLOCK"
+          - "BEGIN RSA PRIVATE KEY"
+          - "BEGIN DSA PRIVATE"
+          - "BEGIN EC PRIVATE"
+          - "BEGIN OPENSSH PRIVATE"
+          - "BEGIN RSA PRIVATE"
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - "BEGIN PGP PRIVATE KEY BLOCK"
+          - "BEGIN RSA PRIVATE KEY"
+          - "BEGIN DSA PRIVATE"
+          - "BEGIN EC PRIVATE"
+          - "BEGIN OPENSSH PRIVATE"
+          - "BEGIN RSA PRIVATE"
+          - private -RSA extension:key
+    test_cases:
+      match_cases:
+        - '"private_key": "-----BEGIN PRIVATE KEY-----AABBCCDDEEFFGGHHIIJJKK=\n-----END
+          PRIVATE KEY-----\n'
+      fail_cases:
+        - '"private_key": $PRIVATE_KEY_FILE'
+    patterns:
+      - '(?s)(-----BEGIN .+?-----)\\S{0,}'

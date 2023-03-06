@@ -1,0 +1,51 @@
+---
+filename: snyk.yaml
+signatures:
+
+  - name: Snyk API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed Snyk API OAuth done
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - snyk
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - snyk
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'snyk_*'
+    test_cases:
+      match_cases:
+        - "Authorization: token c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
+        - "apikey: c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
+      fail_cases:
+        - "c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
+    patterns:
+      - '(?i)(''|"){0,2}((token|key)|Authorization: Token )(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9a-zA-Z-_]{20,40})(''|"){0,2}'
+

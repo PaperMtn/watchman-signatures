@@ -1,0 +1,40 @@
+---
+filename: config_files.yaml
+signatures:
+
+  - name: Config Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed configuration files
+    severity: "30"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".conf"
+          - ".ini"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".conf"
+          - ".ini"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
+

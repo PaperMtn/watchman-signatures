@@ -1,0 +1,38 @@
+---
+filename: drivers_licence_uk.yaml
+signatures:
+
+  - name: Drivers Licence Numbers (UK)
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects potentially exposed drivers licence numbers in plaintext
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - drivers licence
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - drivers licence
+    test_cases:
+      match_cases:
+        - "Drivers licence: FARME100165AB5EW"
+        - "MAR99740614BC2TL"
+      fail_cases:
+        - "9999974061499299"
+    patterns:
+      - '[A-Za-z9]{5}\d{6}[A-Za-z9]{2}\d[A-Za-z]{2}'

@@ -1,0 +1,113 @@
+---
+filename: facebook.yaml
+signatures:
+
+  - name: Facebook Access Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed Facebook API access done
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - graph.facebook.com
+          - facebook.com/dialog/oauth
+          - eaaced
+          - client_secret
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - graph.facebook.com
+          - facebook.com/dialog/oauth
+          - eaaced
+          - client_secret
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - graph.facebook.com -(svg|png|jpeg)
+          - facebook.com/dialog/oauth
+          - eaaced -(svg|png|jpeg)
+          - facebook_* -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - "EAACEdEose0cBATestAccessCodeForFaceb00k"
+      fail_cases:
+        - "EABACEdEose0cBATestAccessCodeForFaceb00k"
+    patterns:
+      - "EAACEdEose0cBA[0-9A-Za-z]+"
+
+  - name: Facebook Secret Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed Facebook API secret done
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - graph.facebook.com
+          - facebook.com/dialog/oauth
+          - eaaced
+          - client_secret
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - graph.facebook.com
+          - facebook.com/dialog/oauth
+          - eaaced
+          - client_secret
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - graph.facebook.com -(svg|png|jpeg)
+          - facebook.com/dialog/oauth
+          - eaaced -(svg|png|jpeg)
+          - facebook_* -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - "facebook.com  client_secret: 111111111111111111111111111111111"
+      fail_cases:
+        - "client_secret: 111111111111111111111111111111111"
+    patterns:
+      - "[f|F][a|A][c|C][e|E][b|B][o|O][o|O][k|K].*[0-9a-f]{32}"

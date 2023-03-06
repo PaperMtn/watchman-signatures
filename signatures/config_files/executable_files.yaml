@@ -1,0 +1,43 @@
+---
+filename: executable_files.yaml
+signatures:
+
+  - name: Executable Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed executable files
+    severity: "30"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".exe"
+          - ".dmg"
+          - ".iso"
+          - ".pkg"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".exe"
+          - ".dmg"
+          - ".iso"
+          - ".pkg"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""

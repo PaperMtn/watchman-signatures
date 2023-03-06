@@ -1,0 +1,65 @@
+---
+filename: cv_files.yaml
+signatures:
+
+  - name: CV Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed CV files
+    severity: "30"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+          - doc
+          - docx
+          - dotx
+          - docm
+          - pdf
+          - gdoc
+          - gpres
+          - ppt
+          - pptx
+          - jpeg
+          - png
+        search_strings:
+          - "resume"
+          - "cv"
+          - "curriculum vitae"
+          - "washup"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+          - doc
+          - docx
+          - dotx
+          - docm
+          - pdf
+          - gdoc
+          - gpres
+          - ppt
+          - pptx
+          - jpeg
+          - png
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "resume"
+          - "cv"
+          - "curriculum vitae"
+          - "washup"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""

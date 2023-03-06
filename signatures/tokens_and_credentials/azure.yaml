@@ -1,0 +1,144 @@
+---
+filename: azure.yaml
+signatures:
+
+  - name: Azure cscfg Files
+    status: enabled
+    author: PaperMtn
+    date: "2022-12-23"
+    description:
+      Detects Azure Cloud Services configuration files that have potentially been exposed.
+      Pattern left blank to return every hit
+    severity: "50"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".cscfg"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".cscfg"
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* extension:cscfg"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
+
+  - name: Azure API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed API done for Azure
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - login.microsoftonline.com
+          - management.azure
+          - management.core
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - login.microsoftonline.com
+          - management.azure
+          - management.core
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - login.microsoftonline.com
+          - management.azure | management.core
+    test_cases:
+      match_cases:
+        - '"accessToken": "123123123123123123123123123123123123"'
+      fail_cases:
+        - '"accessToken": $AZURE_ACCESS_TOKEN'
+    patterns:
+      - '(?i)(''|"){0,2}(refreshtoken|accesstoken|_clientId)(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"){0,2}'
+
+  - name: Azure Service Account Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed Azure service account files
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - accessTokens.json
+          - azureProfile.json
+          - az.sess
+          - az.json
+          - clouds.configtelemetry.txt
+      slack_eg:
+        scope:
+          - messages
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - accessTokens.json
+          - azureProfile.json
+          - az.sess
+          - az.json
+          - clouds.configtelemetry.txt
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - azure extension:json
+    test_cases:
+      match_cases:
+        - '"accessToken": "123123123123123123123123123123123123"'
+      fail_cases:
+        - '"accessToken": $AZURE_ACCESS_TOKEN'
+    patterns:
+      - '(?i)(''|"){0,2}(refreshtoken|accesstoken|_clientId)(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"){0,2}'
+

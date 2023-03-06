@@ -1,0 +1,44 @@
+---
+filename: archive_files.yaml
+signatures:
+
+  - name: Archive Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed archive files
+    severity: "30"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".zip"
+          - ".rar"
+          - ".7z"
+          - ".tar"
+          - ".cab"
+      slack_eg:
+        scope:
+          - files
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".zip"
+          - ".rar"
+          - ".7z"
+          - ".tar"
+          - ".cab"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""

@@ -1,0 +1,27 @@
+---
+filename: kde_wallet.yaml
+signatures:
+
+  - name: KDE Wallet Files
+    status: enabled
+    author: PaperMtn
+    date: "2022-12-23"
+    description:
+      Detects KDE Wallet (password manager) files that have potentially been exposed.
+      Pattern left blank to return every hit
+    severity: "50"
+    notes:
+    references:
+    watchman_apps:
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* extension:kwallet"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""

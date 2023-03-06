@@ -1,0 +1,49 @@
+---
+filename: pagerduty.yaml
+signatures:
+
+  - name: PagerDuty API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed PagerDuty API OAuth done
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - pager
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - pager
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'pagerduty_* -(svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - '-H "Authorization: Token token=aaaddddffffccccffffsdfsdf"'
+        - "apikey: aaaddddffffccccffffsdfsdf"
+      fail_cases:
+        - '-H "Authorization: Bearer aaaddddffffccccffffsdfsdf"'
+    patterns:
+      - '(?i)(''|"){0,2}((token|key)|Authorization: Token token)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9a-zA-Z-_]{20,40})(''|"){0,2}'
+

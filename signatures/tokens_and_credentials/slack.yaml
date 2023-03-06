@@ -1,0 +1,107 @@
+---
+filename: slack.yaml
+signatures:
+
+  - name: Slack API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed Slack API done
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - xoxb
+          - xoxa
+          - xoxp
+          - xoxr
+          - xoxs
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - xoxb
+          - xoxa
+          - xoxp
+          - xoxr
+          - xoxs
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'xoxb -(html|svg|png|jpeg)'
+          - 'xoxa -(html|svg|png|jpeg)'
+          - 'xoxp -(html|svg|png|jpeg)'
+          - 'xoxr -(html|svg|png|jpeg)'
+          - 'xoxs -(html|svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - API_KEY = xoxb-11111111111-a1a1a1a1a1a1a1a1a1a1a1a1
+      fail_cases:
+        - API_KEY = xoxb_slack_key12
+    patterns:
+      - "xox[baprs]([0-9a-zA-Z-]{10,72})"
+
+  - name: Slack Webhooks
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed Slack webhooks
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - https://hooks.slack.com/
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - https://hooks.slack.com/
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - hooks.slack.com
+    test_cases:
+      match_cases:
+        - https://hooks.slack.com/services/T01010101/Babababab/aabab1212abab1212abababa
+      fail_cases:
+        - https://hooks.slack.com/
+        - http://hooks.slack.com/
+    patterns:
+      - "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}"
+

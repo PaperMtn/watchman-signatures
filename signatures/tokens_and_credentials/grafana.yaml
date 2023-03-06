@@ -1,0 +1,52 @@
+---
+filename: grafana.yaml
+signatures:
+
+  - name: Grafana API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed Grafana API done
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - eyjrijoi
+          - grafana
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - eyjrijoi
+          - grafana
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - eyjrijoi
+          - grafana
+    test_cases:
+      match_cases:
+        - "eyJrIjoiO9gpnHNvvt1vSjerEWen9yZtuZqZh3oLwB342dQbdk"
+      fail_cases:
+        - "eyfJrIjoiO9gpnHNvvt1vSjerEWen9yZtuZqZh3oLwB342dQbdk"
+    patterns:
+      - "(?i)eyjrijoi([0-9a-zA-Z]{42})"

@@ -1,0 +1,53 @@
+---
+filename: mailchimp.yaml
+signatures:
+
+  - name: Mailchimp API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2020-10-21"
+    description: Detects exposed Mailchimp API done
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - api.mailchimp.com
+          - MAILCHIMP_API
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - api.mailchimp.com
+          - MAILCHIMP_API
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'api.mailchimp.com'
+          - mailchimp_*
+    test_cases:
+      match_cases:
+        - 3040dee111111111107009fa0b67431c-us2
+      fail_cases:
+        - 3040dee111111111107009fa0b67431c-uk2
+    patterns:
+      - "[0-9a-f]{32}-us[0-9]{1,2}"
+

@@ -1,0 +1,50 @@
+---
+filename: aws.yaml
+signatures:
+
+  - name: AWS API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed AWS API secret done
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - ASIA
+          - AKIA
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ASIA
+          - AKIA
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'ASIA -(html|svg|png)'
+          - 'AKIA -(html|svg|png)'
+    test_cases:
+      match_cases:
+        - AbCdEfGh1234567890AbAbAb+aAb1111111111+=
+      fail_cases:
+        - AbCdEfGh1234567890AbAbAb+aAb1111111111+=AAA
+    patterns:
+      - '(?<![A-Za-z0-9\\/+=])[A-Za-z0-9\\/+=]{40}(?![A-Za-z0-9\\/+=])'

@@ -1,0 +1,37 @@
+---
+filename: macos.yaml
+signatures:
+
+  - name: macOS Keychain Files
+    status: enabled
+    author: PaperMtn
+    date: "2022-12-23"
+    description:
+      Detects macOS Keychain files that have potentially been exposed.
+      Pattern left blank to return every hit
+    severity: "50"
+    watchman_apps:
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".keychain"
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* extension:keychain"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
+

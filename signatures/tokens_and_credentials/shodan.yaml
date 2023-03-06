@@ -1,0 +1,49 @@
+---
+filename: shodan.yaml
+signatures:
+
+  - name: Shodan API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2020-10-26"
+    description: Detects exposed Shodan API done
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - shodan.io
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - shodan.io
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - '*shodan.io'
+          - shodan_*
+    test_cases:
+      match_cases:
+        - aabbccddeeff111111111111aabbccdd
+      fail_cases:
+        - ddeeff111111111111aabbccddeeff
+    patterns:
+      - "[0-9A-Za-z]{32}"
+

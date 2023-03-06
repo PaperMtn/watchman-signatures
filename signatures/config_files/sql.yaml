@@ -1,0 +1,45 @@
+---
+filename: sql.yaml
+signatures:
+
+  - name: SQL Server Trace Files
+    status: enabled
+    author: PaperMtn
+    date: "2022-12-23"
+    description:
+      Detects SQL server trace files that have potentially been exposed.
+      Pattern left blank to return every hit
+    severity: "50"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".trc"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".trc"
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* extension:trc"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
+

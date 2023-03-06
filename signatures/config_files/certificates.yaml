@@ -1,0 +1,50 @@
+---
+filename: certificates.yaml
+signatures:
+
+  - name: Certificate Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed certificate files
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - '".key"'
+          - .p12
+          - .pem
+          - .pfx
+          - .pkcs12
+          - .crt
+          - .cert
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - '".key"'
+          - .p12
+          - .pem
+          - .pfx
+          - .pkcs12
+          - .crt
+          - .cert
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
+

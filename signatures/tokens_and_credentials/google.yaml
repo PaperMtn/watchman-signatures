@@ -1,0 +1,126 @@
+---
+filename: google.yaml
+signatures:
+
+  - name: Google API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed API done for various Google services
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - AIza
+          - .apps.googleusercontent.com
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - AIza
+          - .apps.googleusercontent.com
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'AIza -(html|svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - '"current_key": "AIzaABABABABABABABABABABABABABABABABABA"'
+      fail_cases:
+        - '"current_key": $GOOGLE_AIZA_KEY'
+    patterns:
+      - 'AIza[0-9A-Za-z\\-_]{35}|[0-9]+-[0-9A-Za-z_]{32}'
+
+  - name: GCP Service Account Files
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed GPC service account files
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - iam.gserviceaccount.com
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - iam.gserviceaccount.com
+    gitlab:
+      scope:
+        - blobs
+      search_strings:
+        - 'private_key extension:json'
+    test_cases:
+      match_cases:
+        - '"private_key": "-----BEGIN PRIVATE KEY-----AABBCCDDEEFFGGHHIIJJKK=\n-----END
+          PRIVATE KEY-----\n'
+      fail_cases:
+        - '"private_key": $PRIVATE_KEY_FILE'
+    patterns:
+      - '(?s)(-----BEGIN .+?-----)\\S{0,}'
+
+  - name: GCP Service Accounts in Text
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed GPC service account credentials in text
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - "-----BEGIN PRIVATE KEY-----"
+          - iam.gserviceaccount.com
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "-----BEGIN PRIVATE KEY-----"
+          - iam.gserviceaccount.com
+    test_cases:
+      match_cases:
+        - '"private_key": "-----BEGIN PRIVATE KEY-----AABBCCDDEEFFGGHHIIJJKK=\n-----END
+          PRIVATE KEY-----\n'
+      fail_cases:
+        - '"private_key": $PRIVATE_KEY_FILE'
+    patterns:
+      - '(?s)(-----BEGIN .+?-----)\\S{0,}'

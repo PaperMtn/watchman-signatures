@@ -1,0 +1,40 @@
+---
+filename: ni_numbers.yaml
+signatures:
+
+  - name: National Insurance Numbers (UK)
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects potentially exposed national insurance numbers in plaintext
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - national insurance
+          - ni number
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - national insurance
+          - ni number
+    test_cases:
+      match_cases:
+        - "NI Number: AA123456C"
+        - National Insurance aa123456c
+      fail_cases:
+        - "NI Number: ZZ123456C"
+    patterns:
+      - '(?!BG|GB|NK|KN|TN|NT|ZZ)[A-Ca-cEeGgHhJ-Pj-pR-Tr-tW-Zw-z][A-Ca-cEeGgHhJ-Nj-nPpR-Tr-tW-Zw-z](?:\s*\d{2}){3}\s*[A-Da-d]'

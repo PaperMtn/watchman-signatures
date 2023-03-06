@@ -1,0 +1,57 @@
+---
+filename: stripe.yaml
+signatures:
+
+  - name: Stripe API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2020-10-21"
+    description: Detects exposed Stripe API done
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - api.stripe.com
+          - STRIPE_API_KEY
+          - STRIPE_SECRET_KEY
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - api.stripe.com
+          - STRIPE_API_KEY
+          - STRIPE_SECRET_KEY
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - api.stripe.com
+          - stripe_* -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - sk_live_aaaaaarmZltoKlnSZMaaaaaa
+        - rk_live_aaaaaarmZltoKlnSZMaaaaaa
+        - sk_test_aaaaaarmZltoKlnSZMaaaaaa
+      fail_cases:
+        - uk_live_aaaaaarmZltoKlnSZMaaaaaa
+    patterns:
+      - "[s|r]k_(live|test)_[0-9a-zA-Z]{24}"
+

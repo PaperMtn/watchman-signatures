@@ -1,0 +1,44 @@
+---
+filename: tunnelblick.yaml
+signatures:
+
+  - name: Tunnelblick VPN Files
+    status: enabled
+    author: PaperMtn
+    date: "2022-12-23"
+    description:
+      Detects Tunnelblick VPN config files that have potentially been exposed.
+      Pattern left blank to return every hit
+    severity: "50"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".tblk"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".tblk"
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* extension:tblk"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""

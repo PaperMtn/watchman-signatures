@@ -1,0 +1,89 @@
+---
+filename: new_relic.yaml
+signatures:
+
+  - name: New Relic API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed New Relic API done
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - relic
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - relic
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'relic_* -(svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - "'X-Api-Key': '8ETcQQkZ0nsAeRX1Hqpt9MS8xnxdYDlmMAu1DgLmnq8U2r2'"
+      fail_cases:
+        - "ENV NEWRELIC_KEY=$NEWRELIC_KEY"
+    patterns:
+      - '(?i)(''|"){0,2}((token|key)|X-Api-Key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9a-zA-Z]{40,47})(''|"){0,2}'
+
+  - name: New Relic API Tokens (Prefixed)
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed New Relic API Tokens (Prefixed)
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - nrra
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'nrra -(svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - "APIKEY: NRRA-6baa13a5c9e652b3bdfeb7c7cde9056c381a190de9"
+      fail_cases:
+        - "NRRA-0TBbaAQApxx6ykLgRElSk8UuMVWn02qUZgSu4C58Jc"
+    patterns:
+      - "(?i)NRRA-[a-f0-9]{42}"

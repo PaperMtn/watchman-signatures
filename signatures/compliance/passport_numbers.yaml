@@ -1,0 +1,37 @@
+---
+filename: passport_numbers.yaml
+signatures:
+
+  - name: Passport Numbers
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed passport numbers
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - passport
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - passport
+    test_cases:
+      match_cases:
+        - "Passport cb676767677"
+      fail_cases:
+        - "Passport no: 1071811122890"
+    patterns:
+      - '\b[a-zA-Z0-9]{2}[0-9]{5,10}\b'

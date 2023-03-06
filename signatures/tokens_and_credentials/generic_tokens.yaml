@@ -1,0 +1,262 @@
+---
+filename: generic_tokens.yaml
+signatures:
+
+  - name: Access Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed access_tokens
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - "access_token"
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "access_token"
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - '"access_token:"'
+    test_cases:
+      match_cases:
+        - "ACCESS_TOKEN: 123456789abcdefg123456789123456789"
+      fail_cases:
+        - "ACCESS_TOKEN: $ACCESS_TOKEN"
+    patterns:
+      - '(?i)(''|"){0,2}access_token(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+
+  - name: Bearer Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed bearer tokens_and_credentials
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - bearer
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - Bearer
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - Bearer
+          - "'Authorization': 'Bearer"
+    test_cases:
+      match_cases:
+        - "Authorization: 'Bearer ABABAB1111111ABABAB++__..--..abcdefg'"
+      fail_cases:
+        - "'Authorization': 'Bearer {}'.format(get_token())"
+    patterns:
+      - '(''|"){0,2}Bearer\s([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+
+
+  - name: Client Secrets
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed client_secrets
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - "client_secret"
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "client_secret"
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - '"client_secret:"'
+    test_cases:
+      match_cases:
+        - "client_secret: '123456789abcdefg123456789123456789'"
+      fail_cases:
+        - "client_secret: $CLIENT_SECRET"
+    patterns:
+      - '(?i)(''|"){0,2}client_secret(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+
+  - name: Private Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed private_tokens
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - PRIVATE
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - PRIVATE
+    test_cases:
+      match_cases:
+        - "PRIVATE-TOKEN: 123456789abcdefg123456789123456789"
+      fail_cases:
+        - "PRIVATE-TOKEN: $PRIVATE_TOKEN"
+    patterns:
+      - '(?i)(''|"|‘|’){0,2}private(-|_)token(''|"|‘|’){0,2}:(\s*)(''|"|‘|’){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"|‘|’){0,2}'
+
+  - name: X-API Keys
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed X-API keys
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - x-api-key
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - x-api-key
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - x-api-key
+    test_cases:
+      match_cases:
+        - "x-api-key: aanncccccqaaassscxcc"
+        - "x-api-key = aanncccccqaaassscxcc"
+      fail_cases:
+        - "key = 1234567893feefc5f0q5000bfo0c38d90bbeb"
+    patterns:
+      - '(?i)(''|"){0,2}(x-api-key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9A-Za-z-_]{10,40})(''|"){0,2}'
+
+  - name: X-Auth keys
+    status: enabled
+    author: PaperMtn
+    date: "2021-10-12"
+    description: Detects exposed X-Auth done
+    severity: "70"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - x-auth-key
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - x-auth-key
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - x-auth-key
+    test_cases:
+      match_cases:
+        - 'H "X-Auth-Key:1234567893feefc5f0q5000bfo0c38d90bbeb"'
+      fail_cases:
+        - "key = 1234567893feefc5f0q5000bfo0c38d90bbeb"
+    patterns:
+      - '(?i)(''|"){0,2}(X-Auth-Key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9A-Za-z-_]{10,40})(''|"){0,2}'

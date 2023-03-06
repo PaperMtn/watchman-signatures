@@ -1,0 +1,56 @@
+---
+filename: github.yaml
+signatures:
+
+  - name: GitHub API Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2021-09-24"
+    description: Detects exposed GitHub API OAuth done
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - api.github.com
+          - github.com/login/oauth/
+          - github access_token
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - api.github.com
+          - github.com/login/oauth/
+          - github access_token
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - api.github.com -(svg|png|jpeg)
+          - github.com/login/oauth/
+          - github_* -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - "https://github.com/login/oauth/authorize/$access_token=abcabc123123abcabc123123&token_type=bearer"
+      fail_cases:
+        - "GET https://github.com/login/oauth/authorize"
+    patterns:
+      - "[0-9a-zA-Z]{20,40}"
+
