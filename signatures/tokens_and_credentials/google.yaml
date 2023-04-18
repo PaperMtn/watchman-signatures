@@ -10,6 +10,7 @@ signatures:
     severity: "70"
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - messages
         file_types:
@@ -58,6 +59,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - files
         file_types:
@@ -98,6 +100,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - messages
         file_types:

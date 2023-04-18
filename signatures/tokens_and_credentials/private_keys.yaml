@@ -10,6 +10,7 @@ signatures:
     severity: "90"
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - messages
         file_types:
