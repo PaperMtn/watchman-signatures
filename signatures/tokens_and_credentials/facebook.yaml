@@ -12,6 +12,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - messages
         file_types:
@@ -67,6 +68,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - messages
         file_types:

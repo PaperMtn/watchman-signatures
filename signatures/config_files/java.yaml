@@ -30,6 +30,7 @@ signatures:
         search_strings:
           - ".jks"
       slack_std:
+        category: secrets
         scope:
           - files
         file_types:

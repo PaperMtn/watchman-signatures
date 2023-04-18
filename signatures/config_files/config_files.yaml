@@ -12,6 +12,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: secrets
         scope:
           - files
         file_types:

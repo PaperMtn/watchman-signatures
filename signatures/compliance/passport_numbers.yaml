@@ -12,6 +12,7 @@ signatures:
     references:
     watchman_apps:
       slack_std:
+        category: pii
         scope:
           - messages
         file_types:
