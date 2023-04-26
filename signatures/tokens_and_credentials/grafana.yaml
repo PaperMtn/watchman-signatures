@@ -18,7 +18,6 @@ signatures:
         file_types:
         search_strings:
           - eyjrijoi
-          - grafana
       slack_eg:
         scope:
           - messages
@@ -30,7 +29,6 @@ signatures:
           - connect
         search_strings:
           - eyjrijoi
-          - grafana
       gitlab:
         scope:
           - blobs
