@@ -49,3 +49,56 @@ signatures:
         - AbCdEfGh1234567890AbAbAb+aAb1111111111+=AAA
     patterns:
       - '(?<![A-Za-z0-9\\/+=])[A-Za-z0-9\\/+=]{40}(?![A-Za-z0-9\\/+=])'
+
+  - name: S3 Bucket URLs
+    status: enabled
+    author: PaperMtn
+    date: "2023-04-28"
+    description: Detects S3 bucket URLs, a potential source of exposed data
+    severity: "30"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - '"s3://"'
+          - s3.console.aws.amazon.com
+          - s3.amazonaws.com
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - s3://
+          - s3.console.aws.amazon.com
+          - s3.amazonaws.com
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - '"s3://"'
+          - s3.console.aws.amazon.com
+          - s3.amazonaws.com
+    test_cases:
+      match_cases:
+        - s3-some-region.amazonaws.com/bucket1
+        - https://s3-eu-west-1.amazonaws.com/bucket-name/test.bucket
+        - s3://validbucket
+      fail_cases:
+        - invalid bucket[.s3.amazonaws.com
+    patterns:
+      - '([a-zA-Z0-9-\.\_]+\.s3\.amazonaws\.com|s3://[a-zA-Z0-9-\.\_]+|s3-[a-zA-Z0-9-\.\_\/]+|s3.amazonaws.com/[a-zA-Z0-9-\.\_]+|s3.console.aws.amazon.com/s3/buckets/[a-zA-Z0-9-\.\_]+)'
