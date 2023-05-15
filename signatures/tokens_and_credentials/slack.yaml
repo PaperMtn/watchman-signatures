@@ -104,6 +104,96 @@ signatures:
     patterns:
       - "xapp-\d-[a-zA-Z0-9]{11}-\d{13}-[a-zA-Z0-9]{64}"
 
+  - name: Slack D Cookie
+    status: enabled
+    author: PaperMtn
+    date: "2023-05-15"
+    description: Detects exposed Slack cookie values
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - xoxd
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - xapp
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'xapp -(html|svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - API_KEY = Bearer xapp-1-IEMF8IMY1OQ-4037076220459-85c370b433e366de369c4ef5abdf41253519266982439a75af74a3d68d543fb6
+      fail_cases:
+        - API_KEY = xoxb_slack_key12
+    patterns:
+      - "xapp-\d-[a-zA-Z0-9]{11}-\d{13}-[a-zA-Z0-9]{64}"
+
+  - name: Slack User Session Token
+    status: enabled
+    author: PaperMtn
+    date: "2023-05-15"
+    description: Detects exposed Slack user session tokens
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - xoxc
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - xoxc
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'xoxc -(html|svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - xoxc-1111111111111-2222222222222-3333333333333-2f814e3175a0fcfe1d9f4cded86e99dede6b058c32b9256934c53e83abcf6f28
+      fail_cases:
+        - xoxc-1111111111111-2222222222222-3333333333333-4444444444444
+    patterns:
+      - "xoxc-\d{13}-\d{13}-\d{13}-[a-zA-Z0-9]{64}"
+
   - name: Slack Webhooks
     status: enabled
     author: PaperMtn
