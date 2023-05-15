@@ -102,7 +102,7 @@ signatures:
       fail_cases:
         - API_KEY = xoxb_slack_key12
     patterns:
-      - "xapp-\d-[a-zA-Z0-9]{11}-\d{13}-[a-zA-Z0-9]{64}"
+      - 'xapp-\d-[a-zA-Z0-9]{11}-\d{13}-[a-zA-Z0-9]{64}'
 
   - name: Slack D Cookie
     status: enabled
@@ -147,7 +147,7 @@ signatures:
       fail_cases:
         - xoxd-KbbbbbbbbbbbbbbbbbbbbbbbbbF%2FTWges7Y%2BHG9M6HmkV%2FImCOgRRzDe0We5GeFE0f9bsztAQJjtXEP%%2F3JFyowZCD%2FCy4zCbEaAefF2kpPi0uaaaaaaaaaaaaaaaaaaaaaaa7ZMOcA%2BzEXgAcQ%3D%3D
     patterns:
-      - "xoxd-[A-Za-z0-9%+/=]{210}"
+      - 'xoxd-[A-Za-z0-9%+/=]{210}'
 
   - name: Slack User Session Token
     status: enabled
@@ -192,7 +192,7 @@ signatures:
       fail_cases:
         - xoxc-1111111111111-2222222222222-3333333333333-4444444444444
     patterns:
-      - "xoxc-\d{13}-\d{13}-\d{13}-[a-zA-Z0-9]{64}"
+      - 'xoxc-\d{13}-\d{13}-\d{13}-[a-zA-Z0-9]{64}'
 
   - name: Slack Webhooks
     status: enabled
