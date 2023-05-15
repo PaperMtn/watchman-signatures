@@ -59,6 +59,51 @@ signatures:
     patterns:
       - "xox[baprs]([0-9a-zA-Z-]{10,72})"
 
+  - name: Slack App Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2023-05-15"
+    description: Detects exposed Slack App tokens
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - xapp
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - xapp
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - 'xapp -(html|svg|png|jpeg)'
+    test_cases:
+      match_cases:
+        - API_KEY = Bearer xapp-1-IEMF8IMY1OQ-4037076220459-85c370b433e366de369c4ef5abdf41253519266982439a75af74a3d68d543fb6
+      fail_cases:
+        - API_KEY = xoxb_slack_key12
+    patterns:
+      - "xapp-\d-[a-zA-Z0-9]{11}-\d{13}-[a-zA-Z0-9]{64}"
+
   - name: Slack Webhooks
     status: enabled
     author: PaperMtn
