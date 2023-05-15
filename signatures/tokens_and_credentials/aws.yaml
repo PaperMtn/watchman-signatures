@@ -87,10 +87,7 @@ signatures:
           - wiki_blobs
           - issues
           - merge_requests
-          - notes
-          - snippet_titles
         search_strings:
-          - '"s3://"'
           - s3.console.aws.amazon.com
           - s3.amazonaws.com
     test_cases:
@@ -101,4 +98,4 @@ signatures:
       fail_cases:
         - invalid bucket[.s3.amazonaws.com
     patterns:
-      - '([a-zA-Z0-9-\.\_]+\.s3\.amazonaws\.com|s3://[a-zA-Z0-9-\.\_]+|s3-[a-zA-Z0-9-\.\_\/]+|s3.amazonaws.com/[a-zA-Z0-9-\.\_]+|s3.console.aws.amazon.com/s3/buckets/[a-zA-Z0-9-\.\_]+)'
+      - '([a-zA-Z0-9-\.\_]+\.s3\.amazonaws\.com|s3://[a-zA-Z0-9-\.\_]+|s3-[a-zA-Z0-9-\.\_\/]+amazonaws[a-zA-Z0-9-\.\_\/]+|s3.amazonaws.com/[a-zA-Z0-9-\.\_]+|s3.console.aws.amazon.com/s3/buckets/[a-zA-Z0-9-\.\_]+)'
