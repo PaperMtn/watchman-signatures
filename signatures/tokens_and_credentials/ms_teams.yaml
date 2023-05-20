@@ -1,0 +1,101 @@
+---
+filename: ms_teams.yaml
+signatures:
+
+  - name: Outlook Team Webhooks
+    status: enabled
+    author: PaperMtn
+    date: "2023-05-20"
+    description: Detects exposed Microsoft Outlook Team webhooks
+    severity: "70"
+    notes:
+    references: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - https://outlook.office365.com/webhook/
+          - https://outlook.office.com/webhook/
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - https://outlook.office365.com/webhook/
+          - https://outlook.office.com/webhook/
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - https://outlook.office365.com/webhook/
+          - https://outlook.office.com/webhook/
+    test_cases:
+      match_cases:
+        - "webhook : https://outlook.office.com/webhook/6ee4efaa-986e-4b8e-8d6b-cfa47c89f4b0@87ba1f9a-44cd-43a6-b008-6fdb45a5204e/TravisCI/9ad1eb07cda7411db33e74c3d676774e/0ad415e3-d66a-425c-9914-e9e52f2b81e1"
+      fail_cases:
+        - https://outlook.office.com/6ee4efaa-986e-4b8e-8d6b-cfa47c89f4b0@
+    patterns:
+      - "https://outlook.office(365)?.com/webhook/[a-zA-Z0-9-_@!]{73}/[a-zA-Z0-9-_@!]*/[a-zA-Z0-9-_@!]{32}/[a-zA-Z0-9-_@!]{36}"
+
+  - name: Microsoft Teams Webhooks
+    status: enabled
+    author: PaperMtn
+    date: "2023-05-20"
+    description: Detects exposed Microsoft Teams webhooks
+    severity: "70"
+    notes:
+    references: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - webhook.office.com
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - webhook.office.com
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - webhook.office.com
+    test_cases:
+      match_cases:
+        - "webhook : https://fabulousinc.webhook.office.com/webhookb2/6ee4efaa-986e-4b8e-8d6b-cfa47c89f4b0@87ba1f9a-44cd-43a6-b008-6fdb45a5204e/TravisCI/9ad1eb07cda7411db33e74c3d676774e/0ad415e3-d66a-425c-9914-e9e52f2b81e1"
+      fail_cases:
+        - https://fabulousinc.webhook.office.com
+    patterns:
+      - "https://[a-zA-Z-0-9]+.webhook.office.com/webhookb2/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}/[a-zA-Z0-9-_@!]*/[a-zA-Z-0-9]{32}/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}"
+
