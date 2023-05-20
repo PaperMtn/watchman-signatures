@@ -50,7 +50,7 @@ signatures:
       fail_cases:
         - https://outlook.office.com/6ee4efaa-986e-4b8e-8d6b-cfa47c89f4b0@
     patterns:
-      - "https://outlook/.office(365)?\.com/webhook/[a-zA-Z0-9-_@!]{73}/[a-zA-Z0-9-_@!]*/[a-zA-Z0-9-_@!]{32}/[a-zA-Z0-9-_@!]{36}"
+      - "https://outlook.office(365)?.com/webhook/[a-zA-Z0-9-_@!]{73}/[a-zA-Z0-9-_@!]*/[a-zA-Z0-9-_@!]{32}/[a-zA-Z0-9-_@!]{36}"
 
   - name: Microsoft Teams Webhooks
     status: enabled
@@ -97,5 +97,5 @@ signatures:
       fail_cases:
         - https://fabulousinc.webhook.office.com
     patterns:
-      - "https://[a-zA-Z-0-9]+\.webhook\.office\.com/webhookb2/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}/[a-zA-Z0-9-_@!]*/[a-zA-Z-0-9]{32}/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}"
+      - "https://[a-zA-Z-0-9]+.webhook.office.com/webhookb2/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}/[a-zA-Z0-9-_@!]*/[a-zA-Z-0-9]{32}/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}"
 
