@@ -1,0 +1,65 @@
+---
+filename: dotfiles.yaml
+signatures:
+
+  - name: Dotfiles
+    status: enabled
+    author: PaperMtn
+    date: "2023-06-14"
+    description:
+      Detects common 'dotfile' configuration files
+      Pattern left blank to return every hit
+    severity: "90"
+    notes:
+      These files often contain credentials or other secrets. May be noisy,
+      but the contents of the files is worth checking if discovered
+    references:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - files
+        file_types:
+        search_strings:
+          - ".bashrc"
+          - ".bash_profile"
+          - ".zprofile"
+          - ".zshrc"
+          - "config.fish"
+          - ".environ"
+          - ".export"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ".bashrc"
+          - ".bash_profile"
+          - ".zprofile"
+          - ".zshrc"
+          - "config.fish"
+          - ".environ"
+          - ".export"
+      gitlab:
+        scope:
+          - blobs
+        search_strings:
+          - "* filename:.bashrc"
+          - "* filename:.bash_profile"
+          - "* filename:.zprofile"
+          - "* filename:.zshrc"
+          - "* filename:.config.fish"
+          - "* filename:.environ"
+          - "* filename:.export"
+    test_cases:
+      match_cases:
+        - blank
+      fail_cases:
+        - blank
+    patterns:
+      - ""
