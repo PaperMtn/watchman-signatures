@@ -1,28 +1,27 @@
 ---
 filename: alibaba.yaml
 signatures:
-
   - name: Alibaba IAM Access Key ID
     status: enabled
     author: PaperMtn
-    date: "2023-12-22"
+    date: 2023-12-22
     description: Detects exposed Alibaba IAM access key IDs
     severity: "50"
-    notes:
-    references:
+    notes: null
+    references: null
     watchman_apps:
       slack_std:
         category: secrets
         scope:
           - messages
-        file_types:
+        file_types: null
         search_strings:
           - LTAI
       slack_eg:
         scope:
           - messages
           - drafts
-        file_types:
+        file_types: null
         locations:
           - public
           - private
@@ -43,33 +42,32 @@ signatures:
           - LTAI -(svg|png|jpeg)
     test_cases:
       match_cases:
-        - "accessKeyId=LTAIAAAZ5BhleEv7"
+        - accessKeyId=LTAIAAAZ5BhleEv7
       fail_cases:
-        - "accessKeyId=LAAIAAAZ5BhleEv7"
+        - accessKeyId=LAAIAAAZ5BhleEv7
     patterns:
-      - "LTAI[0-9a-zA-Z]{12,20}"
-
+      - LTAI[0-9a-zA-Z]{12,20}
   - name: Alibaba IAM Secret Access Key
     status: enabled
     author: PaperMtn
-    date: "2023-12-22"
+    date: 2023-12-22
     description: Detects exposed Alibaba IAM secret access key
     severity: "90"
-    notes:
-    references:
+    notes: null
+    references: null
     watchman_apps:
       slack_std:
         category: secrets
         scope:
           - messages
-        file_types:
+        file_types: null
         search_strings:
           - LTAI
       slack_eg:
         scope:
           - messages
           - drafts
-        file_types:
+        file_types: null
         locations:
           - public
           - private
@@ -90,8 +88,8 @@ signatures:
           - LTAI -(svg|png|jpeg)
     test_cases:
       match_cases:
-        - '$accessKeySecret = "6pbpC5bqTJ6aATHAd5434dq13XaEe7";'
+        - $accessKeySecret = "6pbpC5bqTJ6aATHAd5434dq13XaEe7";
       fail_cases:
-        - "accessKeyId=LAAIAAAZ5BhleEv7"
+        - accessKeyId=LAAIAAAZ5BhleEv7
     patterns:
-      - "[\W\s]{1}([0-9a-zA-Z]{30,48})[\W\s]{1}"
+      - "[\\W\\s]{1}([0-9a-zA-Z]{30,48})[\\W\\s]{1}"
