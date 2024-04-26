@@ -11,6 +11,15 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - graph.facebook.com
+          - facebook.com/dialog/oauth
+          - eaaced
+          - client_secret
       slack_std:
         category: secrets
         scope:
@@ -67,6 +76,15 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - graph.facebook.com
+            - facebook.com/dialog/oauth
+            - eaaced
+            - client_secret
       slack_std:
         category: secrets
         scope:

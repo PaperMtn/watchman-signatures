@@ -9,6 +9,17 @@ signatures:
     description: Detects exposed PGP private keys
     severity: "90"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - "BEGIN PGP PRIVATE KEY BLOCK"
+          - "BEGIN RSA PRIVATE KEY"
+          - "BEGIN DSA PRIVATE"
+          - "BEGIN EC PRIVATE"
+          - "BEGIN OPENSSH PRIVATE"
+          - "BEGIN RSA PRIVATE"
       slack_std:
         category: secrets
         scope:

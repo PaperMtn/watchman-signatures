@@ -9,6 +9,12 @@ signatures:
     description: Detects exposed Shodan API tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - shodan.io
       slack_std:
         category: secrets
         scope:

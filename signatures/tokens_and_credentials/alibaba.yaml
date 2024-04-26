@@ -1,6 +1,7 @@
 ---
 filename: alibaba.yaml
 signatures:
+
   - name: Alibaba IAM Access Key ID
     status: enabled
     author: PaperMtn
@@ -10,6 +11,12 @@ signatures:
     notes: null
     references: null
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - LTAI
       slack_std:
         category: secrets
         scope:
@@ -47,6 +54,7 @@ signatures:
         - accessKeyId=LAAIAAAZ5BhleEv7
     patterns:
       - LTAI[0-9a-zA-Z]{12,20}
+
   - name: Alibaba IAM Secret Access Key
     status: enabled
     author: PaperMtn
@@ -56,6 +64,12 @@ signatures:
     notes: null
     references: null
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - LTAI
       slack_std:
         category: secrets
         scope:

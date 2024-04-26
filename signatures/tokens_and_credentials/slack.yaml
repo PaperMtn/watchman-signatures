@@ -9,6 +9,18 @@ signatures:
     description: Detects exposed Slack API tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - api.slack.com
+          - slack
+          - xoxb
+          - xoxa
+          - xoxp
+          - xoxr
+          - xoxs
       slack_std:
         category: secrets
         scope:
@@ -66,6 +78,14 @@ signatures:
     description: Detects exposed Slack App tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - api.slack.com
+          - slack
+          - xapp
       slack_std:
         category: secrets
         scope:
@@ -111,6 +131,14 @@ signatures:
     description: Detects exposed Slack cookie values. These can be used for authentication
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - api.slack.com
+          - slack
+          - d=
       slack_std:
         category: secrets
         scope:
@@ -156,6 +184,14 @@ signatures:
     description: Detects exposed Slack user session tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - api.slack.com
+            - slack
+            - xoxs
       slack_std:
         category: secrets
         scope:
@@ -203,6 +239,12 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - hooks.slack.com
       slack_std:
         category: secrets
         scope:
