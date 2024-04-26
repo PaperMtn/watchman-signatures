@@ -9,6 +9,14 @@ signatures:
     description: Detects exposed AWS API secret tokens
     severity: "90"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - aws_access_key_id
+          - aws_secret_access_key
+          - aws_session_token
       slack_std:
         category: secrets
         scope:
@@ -57,6 +65,14 @@ signatures:
     description: Detects S3 bucket URLs, a potential source of exposed data
     severity: "30"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - s3.amazonaws.com
+          - s3.console.aws.amazon.com
+          - s3://
       slack_std:
         category: secrets
         scope:

@@ -11,6 +11,12 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - grafana
       slack_std:
         category: secrets
         scope:

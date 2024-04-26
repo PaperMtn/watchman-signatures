@@ -11,6 +11,13 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+          scope:
+          - questions
+          - answers
+          search_strings:
+          - api.twilio.com
+          - TWILIO_API
       slack_std:
         category: secrets
         scope:

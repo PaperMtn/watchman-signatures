@@ -11,6 +11,14 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - api.twitter.com
+          - twitter
+          - oauth_token_secret
       slack_std:
         category: secrets
         scope:

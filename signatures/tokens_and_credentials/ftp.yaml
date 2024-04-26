@@ -9,6 +9,12 @@ signatures:
     description: Detects exposed FTP credentials
     severity: "90"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - ftp
       slack_std:
         category: secrets
         scope:

@@ -9,6 +9,12 @@ signatures:
     description: Detects exposed access_tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - access_token
       slack_std:
         category: secrets
         scope:
@@ -54,6 +60,12 @@ signatures:
     description: Detects exposed bearer tokens_and_credentials
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - bearer
       slack_std:
         category: secrets
         scope:
@@ -101,6 +113,12 @@ signatures:
     description: Detects exposed client_secrets
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - client_secret
       slack_std:
         category: secrets
         scope:
@@ -146,6 +164,12 @@ signatures:
     description: Detects exposed private_tokens
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - PRIVATE
       slack_std:
         category: secrets
         scope:
@@ -181,6 +205,12 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - x-api-key
       slack_std:
         category: secrets
         scope:
@@ -229,6 +259,12 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - x-auth-key
       slack_std:
         category: secrets
         scope:

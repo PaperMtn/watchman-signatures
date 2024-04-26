@@ -9,6 +9,15 @@ signatures:
     description: Detects exposed API tokens for various Google services
     severity: "70"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - googleapis.com
+          - google.com
+          - google
+          - googleapis
       slack_std:
         category: secrets
         scope:
@@ -58,6 +67,12 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - iam.gserviceaccount.com
       slack_std:
         category: secrets
         scope:
@@ -99,6 +114,13 @@ signatures:
     notes:
     references:
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - iam.gserviceaccount.com
+            - "-----BEGIN PRIVATE KEY -----"
       slack_std:
         category: secrets
         scope:

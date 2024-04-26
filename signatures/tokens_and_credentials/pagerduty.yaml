@@ -9,6 +9,12 @@ signatures:
     description: Detects exposed PagerDuty API OAuth tokens
     severity: "90"
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+          - pagerduty
       slack_std:
         category: secrets
         scope:

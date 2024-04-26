@@ -11,6 +11,13 @@ signatures:
     notes:
     references: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - outlook.office365.com
+            - outlook.office.com
       slack_std:
         category: secrets
         scope:
@@ -61,6 +68,13 @@ signatures:
     notes:
     references: https://docs.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/connectors-using
     watchman_apps:
+      stack_overflow:
+        scope:
+          - questions
+          - answers
+        search_strings:
+            - webhook.office.com
+            - webhook.office.com
       slack_std:
         category: secrets
         scope:
