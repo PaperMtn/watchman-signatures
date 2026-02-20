@@ -3,22 +3,14 @@ filename: cloudflare.yaml
 signatures:
 
   - name: Cloudflare API Tokens
-    id: tokens_cloudflare_api
     status: enabled
     author: PaperMtn
-    date: "2020-10-26"
+    date: "2026-02-20"
     description: Detects exposed Cloudflare API tokens
     severity: "70"
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - api.cloudflare.com
-          - cloudflare_
       slack_std:
         category: secrets
         scope:
@@ -54,9 +46,11 @@ signatures:
           - cloudflare_*
     test_cases:
       match_cases:
-        - 6-KJqFyoyNrBraZyIxxrFi2V8tAoJrOr2x7AAAAA
+        - "Authorization: Bearer aB3dEfGhIjKlMnOpQrStUvWxYz0123456789_-Aa"
+        - "CLOUDFLARE_API_TOKEN=9a8b7c6d5e4F3g2H1i0JkLmNoPqRsTuVwXyZ_-12"
+        - "CLOUDFLARE_API_TOKEN: 9a8b7c6d5e4F3g2H1i0JkLmNoPqRsTuVwXyZ_-12"
       fail_cases:
-        - 6-KJqFyoyNrBraZyIxxrFi2V8tAoJrOr2x7AA
+        - 9a8b7c6d5e4F3g2H1i0JkLmNoPqRsTuVwXyZ_-12
     patterns:
-      - "[0-9A-Za-z-_]{40}"
+      - (?i)(^|[^A-Za-z0-9_])(?:Authorization\s*:\s*Bearer|CLOUDFLARE_API_TOKEN)\s*(?:=|:)?\s*([A-Za-z0-9_-]{40})(?=$|[^A-Za-z0-9_])
 

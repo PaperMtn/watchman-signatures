@@ -1,30 +1,25 @@
 ---
-filename: grafana.yaml
+filename: gitlab.yaml
 signatures:
 
-  - name: Grafana API Tokens
-    id: tokens_grafana_api
+  - name: GitLab API Tokens
     status: enabled
     author: PaperMtn
-    date: "2021-10-12"
-    description: Detects exposed Grafana API tokens
-    severity: "90"
-    notes:
+    date: "2026-02-20"
+    description: Detects Personal/Project/Group Access Tokens
     references:
+      - https://docs.gitlab.com/api/admin/token
+      - https://stackoverflow.com/questions/62524667/gitlab-increase-number-of-characters-in-personal-access-token
+    severity: "70"
+    notes:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - grafana
       slack_std:
         category: secrets
         scope:
           - messages
         file_types:
         search_strings:
-          - eyjrijoi
+          - glpat
       slack_eg:
         scope:
           - messages
@@ -35,7 +30,7 @@ signatures:
           - private
           - connect
         search_strings:
-          - eyjrijoi
+          - glpat
       gitlab:
         scope:
           - blobs
@@ -47,11 +42,13 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - eyjrijoi
+          - glpat -(svg|png|jpeg)
     test_cases:
       match_cases:
-        - "eyJrIjoiO9gpnHNvvt1vSjerEWen9yZtuZqZh3oLwB342dQbdk"
+        - glpat-ABCD1234efgh5678_IJKLmnoPQRSTuvwxYZ
+        - glpat-0123456789abcdefghijklmnopqrstuvwxyz_-ABCDE
       fail_cases:
-        - "eyfJrIjoiO9gpnHNvvt1vSjerEWen9yZtuZqZh3oLwB342dQbdk"
+        - glpat-ABCD1234efgh5678
     patterns:
-      - "(?i)eyjrijoi([0-9a-zA-Z]{42})"
+      - (^|[^A-Za-z0-9_-])(glpat-[A-Za-z0-9_-]{20,200})($|[^A-Za-z0-9_-])
+

@@ -3,29 +3,23 @@ filename: heroku.yaml
 signatures:
 
   - name: Heroku API Tokens
-    id: tokens_heroku_api
     status: enabled
     author: PaperMtn
-    date: "2020-10-26"
+    date: "2026-02-20"
     description: Detects exposed Heroku API tokens
     severity: "70"
-    notes:
     references:
+      - https://devcenter.heroku.com/changelog-items/2842
+      - https://devcenter.heroku.com/articles/oauth
+    notes:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - api.heroku.com
-          - HEROKU_API
       slack_std:
         category: secrets
         scope:
           - messages
         file_types:
         search_strings:
-          - heroku.com
+          - HRKU
       slack_eg:
         scope:
           - messages
@@ -36,7 +30,7 @@ signatures:
           - private
           - connect
         search_strings:
-          - heroku.com
+          - HRKU
       gitlab:
         scope:
           - blobs
@@ -48,13 +42,15 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - id.heroku.com
-          - api.heroku.com
-          - heroku
+          - HRKU
     test_cases:
       match_cases:
-        - 01234567-89ab-cdef-0123-456789abcdef
+        - HRKU-AALJCYR7SRzPkj9_BGqhi1jAI1J5P4WfD6ITENvdVydAPCnNcAlrMMahHrTo
+        - HRKU-57dce771-afad-4c41-a8a5-d10b7fbc743c
+        - HRKU-AALJCYR7SRzPkj9_BGqhi1jAI1J5P4WfD6ITENvdVydAPCnNcAlrMMahHrTo
       fail_cases:
-        - 2345678-89ab-cdef-0123-456789abcdef
+        - HRKU-57dce771-afad-4c4-a8a-d10b7fbc743c
+        - HRKU-abcDEF1234567890_abcDEF1234567890_abcDEF1234567890
+        - HRKU-1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ_-aBcDeFgHiJk
     patterns:
-      - "[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}"
+      - (^|[^A-Za-z0-9_])(HRKU-(?:[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}|[A-Za-z0-9_-]{60,120}))($|[^A-Za-z0-9_])

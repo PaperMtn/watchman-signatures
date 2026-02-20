@@ -283,9 +283,10 @@ signatures:
     test_cases:
       match_cases:
         - https://hooks.slack.com/services/T01010101/Babababab/aabab1212abab1212abababa
+        - https://hooks.slack.com/services/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
       fail_cases:
         - https://hooks.slack.com/
         - http://hooks.slack.com/
     patterns:
-      - "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}"
+      - 'https://hooks.slack.com/services/T[a-zA-Z0-9_]{8,10}/B[a-zA-Z0-9_]{8,10}/[a-zA-Z0-9_]{24}'
 

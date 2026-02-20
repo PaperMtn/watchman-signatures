@@ -3,19 +3,12 @@ filename: generic_tokens.yaml
 signatures:
 
   - name: Access Tokens
-    id: tokens_generic_access_tokens
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
+    date: "2026-02-20"
     description: Detects exposed access_tokens
     severity: "70"
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - access_token
       slack_std:
         category: secrets
         scope:
@@ -48,26 +41,22 @@ signatures:
           - '"access_token:"'
     test_cases:
       match_cases:
+        - '"access_token": "ya29.a0AfH6SMCw9xJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDdEeFf"'
+        - "access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFuZHJldyJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        - "access_token=AbCdEfGhIjKlMnOpQrStUvWxYz0123456789-_._~+/=="
         - "ACCESS_TOKEN: 123456789abcdefg123456789123456789"
       fail_cases:
         - "ACCESS_TOKEN: $ACCESS_TOKEN"
     patterns:
-      - '(?i)(''|"){0,2}access_token(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_])access_token(["'‘’`]?)\s*(?:[:="']\s*|\s+)(["'‘’`]?)([A-Za-z0-9._~+\/=-]{30,512})\2($|[^A-Za-z0-9_])
 
   - name: Bearer Tokens
-    id: tokens_generic_bearer_tokens
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
+    date: "2026-02-20"
     description: Detects exposed bearer tokens_and_credentials
     severity: "70"
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - bearer
       slack_std:
         category: secrets
         scope:
@@ -105,23 +94,61 @@ signatures:
       fail_cases:
         - "'Authorization': 'Bearer {}'.format(get_token())"
     patterns:
-      - '(''|"){0,2}Bearer\s([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_])Bearer(?:\s+|:\s*)(["'‘’`]?)([A-Za-z0-9._~+\-\/=]{30,1024})\2($|[^A-Za-z0-9_])
+
+  - name: JSON Web Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2026-02-10"
+    description: Detects exposed JWT tokens
+    severity: "70"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - eyJ
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - eyJ
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - eyJ
+    test_cases:
+      match_cases:
+        - "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFuZHJldyBCeWZvcmQiLCJpYXQiOjE1MTYyMzkwMjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      fail_cases:
+        - "'Authorization': 'Bearer {}'.format(get_token())"
+    patterns:
+      - (?<![A-Za-z0-9_-])(eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})(?![A-Za-z0-9_-])
 
 
   - name: Client Secrets
-    id: tokens_generic_client_secrets
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed client_secrets
     severity: "70"
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - client_secret
       slack_std:
         category: secrets
         scope:
@@ -155,41 +182,26 @@ signatures:
     test_cases:
       match_cases:
         - "client_secret: '123456789abcdefg123456789123456789'"
+        - '"client_secret": "aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDdEeFf"'
+        - "clientSecret=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-._~+/=="
+        - 'client_secret: "mN0bV2cX4zA6sD8fG1hJ3kL5pQ7rT9uW2yE4iO6aBcDeFgH"'
       fail_cases:
         - "client_secret: $CLIENT_SECRET"
     patterns:
-      - '(?i)(''|"){0,2}client_secret(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_])(client_secret|clientSecret)(["'‘’`]?)\s*[:=]\s*(["'‘’`]?)([A-Za-z0-9._~+\-\/=]{30,512})\3($|[^A-Za-z0-9_])
 
   - name: Private Tokens
-    id: tokens_generic_private_tokens
     status: enabled
     author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed private_tokens
     severity: "70"
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - PRIVATE
       slack_std:
         category: secrets
         scope:
           - messages
         file_types:
-        search_strings:
-          - PRIVATE
-      slack_eg:
-        scope:
-          - messages
-          - drafts
-        file_types:
-        locations:
-          - public
-          - private
-          - connect
         search_strings:
           - PRIVATE
       gitlab:
@@ -203,17 +215,30 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - 'private-token | private_token'
+          - PRIVATE
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - PRIVATE
     test_cases:
       match_cases:
-        - "PRIVATE-TOKEN: 123456789abcdefg123456789123456789"
+        - 'private_token: "aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCc"'
+        - 'private-token=0123456789abcdefghijklmnopqrstuvwxyzABCDEfghijkLMNOP'
+        - 'privateToken:`mN0bV2cX4zA6sD8fG1hJ3kL5pQ7rT9uW2yE4iO6`'
+        - '‘private_token’: ZXhhbXBsZS50b2tlbi5zdHJpbmcxMjM0NTY3ODkw'
       fail_cases:
         - "PRIVATE-TOKEN: $PRIVATE_TOKEN"
     patterns:
-      - '(?i)(''|"|‘|’){0,2}private(-|_)token(''|"|‘|’){0,2}:(\s*)(''|"|‘|’){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"|‘|’){0,2}'
+      - (?i)(^|[^A-Za-z0-9_])["'‘’`]?((?:private[-_]token)|privateToken)["'‘’`]?\s*[:=]\s*(["'‘’`]?)([A-Za-z0-9._~+\-\/=]{20,256})\3($|[^A-Za-z0-9_])
 
   - name: X-API Keys
-    id: tokens_generic_x_api_keys
     status: enabled
     author: PaperMtn
     date: "2021-10-12"
@@ -222,12 +247,6 @@ signatures:
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - x-api-key
       slack_std:
         category: secrets
         scope:
@@ -262,13 +281,16 @@ signatures:
       match_cases:
         - "x-api-key: aanncccccqaaassscxcc"
         - "x-api-key = aanncccccqaaassscxcc"
+        - "x-api-key: aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-Aa"
+        - "X-API-KEY=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-"
+        - '"x-api-key": "ZXhhbXBsZS1hcGkta2V5XzEyMzQ1Njc4OTBfYWJjZGVmZw=="'
+        - 'curl -H "x-api-key: AbCdEfGhIjKlMnOpQrStUvWxYz0123456789" https://example.com'
       fail_cases:
         - "key = 1234567893feefc5f0q5000bfo0c38d90bbeb"
     patterns:
-      - '(?i)(''|"){0,2}(x-api-key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9A-Za-z-_]{10,40})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_-])["']?x-api-key["']?\s*(?::|=|\s)\s*(["']?)([A-Za-z0-9._~+\-\/=]{20,256})\2($|[^A-Za-z0-9_-])
 
   - name: X-Auth keys
-    id: tokens_generic_x_auth_keys
     status: enabled
     author: PaperMtn
     date: "2021-10-12"
@@ -277,12 +299,6 @@ signatures:
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - x-auth-key
       slack_std:
         category: secrets
         scope:
@@ -315,8 +331,11 @@ signatures:
           - x-auth-key
     test_cases:
       match_cases:
-        - 'H "X-Auth-Key:1234567893feefc5f0q5000bfo0c38d90bbeb"'
+        - "X-Auth-Key: aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDd"
+        - "x-auth-key=0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-"
+        - '"X-Auth-Key": "ZXhhbXBsZS1nbG9iYWwta2V5XzEyMzQ1Njc4OTBfYWJjZA=="'
+        - 'curl -H "X-Auth-Key: AbCdEfGhIjKlMnOpQrStUvWxYz0123456789" -H "X-Auth-Email: me@example.com" https://api.cloudflare.com/client/v4/user'
       fail_cases:
         - "key = 1234567893feefc5f0q5000bfo0c38d90bbeb"
     patterns:
-      - '(?i)(''|"){0,2}(X-Auth-Key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9A-Za-z-_]{10,40})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_-])["']?X-Auth-Key["']?\s*(?::|=|\s)\s*(["']?)([A-Za-z0-9._~+\-\/=]{24,128})\2($|[^A-Za-z0-9_-])
