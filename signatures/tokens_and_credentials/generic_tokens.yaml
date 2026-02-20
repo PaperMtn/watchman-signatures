@@ -97,15 +97,16 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - Bearer
-          - "'Authorization': 'Bearer"
+          - '"authorization: bearer'
+          - "\"authorization\": \"bearer"
+          - "'authorization': 'bearer"
     test_cases:
       match_cases:
         - "Authorization: 'Bearer ABABAB1111111ABABAB++__..--..abcdefg'"
       fail_cases:
         - "'Authorization': 'Bearer {}'.format(get_token())"
     patterns:
-      - '(''|"){0,2}Bearer\s([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
+      - '(''|"){0,2}[bB]earer\s([0-9a-zA-Z!@#$&()\/\-`_.+,"]{30,})(''|"){0,2}'
 
 
   - name: Client Secrets
