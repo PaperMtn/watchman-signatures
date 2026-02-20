@@ -3,32 +3,28 @@ filename: github.yaml
 signatures:
 
   - name: GitHub API Tokens
-    id: tokens_github_api
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
-    description: Detects exposed GitHub API OAuth tokens
+    date: "2026-02-12"
+    description: Detects exposed GitHub API tokens
+    reference:
+      - https://github.blog/engineering/platform-security/behind-githubs-new-authentication-token-formats/
+      - https://github.com/github/docs/issues/31625
     severity: "90"
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - api.github.com
-          - github.com/login/oauth/
-          - github access_token
       slack_std:
         category: secrets
         scope:
           - messages
         file_types:
         search_strings:
-          - api.github.com
-          - github.com/login/oauth/
-          - github access_token
+          - ghp
+          - gho
+          - ghu
+          - ghs
+          - ghr
       slack_eg:
         scope:
           - messages
@@ -39,9 +35,11 @@ signatures:
           - private
           - connect
         search_strings:
-          - api.github.com
-          - github.com/login/oauth/
-          - github access_token
+          - ghp
+          - gho
+          - ghu
+          - ghs
+          - ghr
       gitlab:
         scope:
           - blobs
@@ -53,14 +51,67 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - api.github.com -(svg|png|jpeg)
-          - github.com/login/oauth/
-          - github_* -(svg|png|jpeg)
+          - ghp -(svg|png|jpeg)
+          - gho -(svg|png|jpeg)
+          - ghu -(svg|png|jpeg)
+          - ghs -(svg|png|jpeg)
+          - ghr -(svg|png|jpeg)
     test_cases:
       match_cases:
-        - "https://github.com/login/oauth/authorize/$access_token=abcabc123123abcabc123123&token_type=bearer"
+        - gho_ZxYwV1uT2sR3qP4oN5mL6kJ7iH8gF9eD0cB1
+        - ghs_0123abcdEFGH4567ijklMNOP8901qrstUVWX
+        - ghp_A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8
       fail_cases:
-        - "GET https://github.com/login/oauth/authorize"
+        - ghp_A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r898s
     patterns:
-      - "[0-9a-zA-Z]{20,40}"
+      - (^|[^A-Za-z0-9_])(gh[pousr]_[A-Za-z0-9_]{36})($|[^A-Za-z0-9_])
 
+  - name: GitHub Fine-Grained Personal Access Tokens
+    status: enabled
+    author: PaperMtn
+    date: "2026-02-12"
+    description: Detects exposed Fine-Grained GitHub Personal Access Tokens (PATs)
+    reference:
+      - https://gist.github.com/magnetikonline/073afe7909ffdd6f10ef06a00bc3bc88
+      - https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token
+    severity: "90"
+    notes:
+    references:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - github_pat
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - github_pat
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - github_pat -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - github_pat_1234567890AbCdEfGhIjKl_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi0123456789XYZabcdefghijk
+      fail_cases:
+        - github_pat_Z9Y8X7W6V5U4T3S2R1Q0Pn_mN0bV2cX4zA6sD8fG1hJ3kL
+    patterns:
+      - (^|[^A-Za-z0-9_])(github_pat_[A-Za-z0-9]{22}_[A-Za-z0-9]{59})($|[^A-Za-z0-9_])

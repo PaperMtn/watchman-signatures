@@ -3,7 +3,6 @@ filename: azure.yaml
 signatures:
 
   - name: Azure cscfg Files
-    id: tokens_azure_cscfg_files
     status: enabled
     author: PaperMtn
     date: "2022-12-23"
@@ -11,15 +10,10 @@ signatures:
       Detects Azure Cloud Services configuration files that have potentially been exposed.
       Pattern left blank to return every hit
     severity: "50"
-    notes:
     references:
+      - https://learn.microsoft.com/en-us/azure/cloud-services-extended-support/schema-cscfg-file
+    notes:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - ".cscfg"
       slack_std:
         category: secrets
         scope:
@@ -51,29 +45,18 @@ signatures:
     patterns:
       - ""
 
-  - name: Azure API Tokens
-    id: tokens_azure_api
+  - name: Azure JWT access token
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
-    description: Detects exposed API tokens for Azure
-    severity: "70"
-    notes:
+    date: "2026-02-20"
+    description: Detects Azure/Microsoft identity access tokens that are JWT-shaped.
+    severity: "85"
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-            - login.microsoftonline.com
-            - management.azure
-            - management.core
       slack_std:
         category: secrets
         scope:
           - messages
-        file_types:
         search_strings:
           - login.microsoftonline.com
           - management.azure
@@ -82,7 +65,6 @@ signatures:
         scope:
           - messages
           - drafts
-        file_types:
         locations:
           - public
           - private
@@ -95,79 +77,120 @@ signatures:
         scope:
           - blobs
           - commits
-          - milestones
-          - wiki_blobs
           - issues
           - merge_requests
           - notes
-          - snippet_titles
         search_strings:
           - login.microsoftonline.com
-          - management.azure | management.core
+          - management.azure
+          - management.core
     test_cases:
       match_cases:
-        - '"accessToken": "123123123123123123123123123123123123"'
+        - '"accessToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFuZHJldyJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"'
+        - "access_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vIn0.VZlqYz8qZKx7wXzj8oKqk9dKc3lQy2c7kJ4f8LqVQeQ"
       fail_cases:
-        - '"accessToken": $AZURE_ACCESS_TOKEN'
+        - "\"accessToken\": $AZURE_ACCESS_TOKEN"
+        - "\"accessToken\": \"123123123123123123123123123123\""
     patterns:
-      - '(?i)(''|"){0,2}(refreshtoken|accesstoken|_clientId)(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"){0,2}'
+      - (^|[^A-Za-z0-9_])(?:access_token|accessToken|id_token|idToken)["']*\s*[:=]\s*([\"']?)((?:eyJ[A-Za-z0-9_-]{10,200})\.(?:[A-Za-z0-9_-]{10,2000})\.(?:[A-Za-z0-9_-]{10,800}))($|[^A-Za-z0-9_])
 
-  - name: Azure Service Account Files
-    id: tokens_azure_service_account_files
+  - name: Azure refresh token
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
-    description: Detects exposed Azure service account files
-    severity: "90"
-    notes:
+    date: "2026-02-20"
+    description: Detects Azure/Microsoft identity refresh tokens (opaque) using strong key context + length bounds.
+    severity: "80"
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-            - questions
-            - answers
-        search_strings:
-            - azureProfile.json
-            - az.sess
-            - az.json
-            - clouds.configtelemetry.txt
       slack_std:
         category: secrets
         scope:
           - messages
-        file_types:
         search_strings:
-          - accessTokens.json
-          - azureProfile.json
-          - az.sess
-          - az.json
-          - clouds.configtelemetry.txt
+          - login.microsoftonline.com
+          - management.azure
+          - management.core
       slack_eg:
         scope:
           - messages
-          - files
           - drafts
-        file_types:
         locations:
           - public
           - private
           - connect
         search_strings:
-          - accessTokens.json
-          - azureProfile.json
-          - az.sess
-          - az.json
-          - clouds.configtelemetry.txt
+          - login.microsoftonline.com
+          - management.azure
+          - management.core
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - issues
+          - merge_requests
+          - notes
+        search_strings:
+          - login.microsoftonline.com
+          - management.azure
+          - management.core
+    test_cases:
+      match_cases:
+        - 'refresh_token: 0.AVYA_in0zaI3eUqOQHrbrD-FUvEXAMPLE_REFRESH_TOKEN_STRING_1234567890abcdefGHIJKLmnopQRST'
+        - '"refreshToken" = "M.R3_BAY.abcDEFghiJKLmnoPQRstuVWXyz0123456789_-AaBbCcDdEeFfGgHhIiJjKkLlMmNn"'
+      fail_cases:
+        - "\"refresh_token\": $AZURE_REFRESH_TOKEN"
+        - "\"refresh_token\": \"shorttoken\""
+    patterns:
+      - (?i)(^|[^A-Za-z0-9_])(?:refresh_token|refreshToken)([\"']?)\s*[:=]\s*([\"']?)([A-Za-z0-9._~+\-\/=]{60,2048})($|[^A-Za-z0-9_])
+
+  - name: Azure CLI token file presence
+    status: enabled
+    author: PaperMtn
+    date: "2026-02-20"
+    description: Detects presence of common Azure CLI local auth/cache artifacts in files.
+    severity: "75"
+    references:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - files
+        search_strings:
+          - "accessTokens.json"
+          - "azureProfile.json"
+          - "az.sess"
+          - "az.json"
+          - "clouds.config"
+          - "telemetry.txt"
+      slack_eg:
+        scope:
+          - files
+          - drafts
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - "accessTokens.json"
+          - "azureProfile.json"
+          - "az.sess"
+          - "az.json"
+          - "clouds.config"
+          - "telemetry.txt"
       gitlab:
         scope:
           - blobs
         search_strings:
-          - azure extension:json
+          - "accessTokens.json"
+          - "azureProfile.json"
+          - "az.sess"
+          - "az.json"
+          - "clouds.config"
+          - "telemetry.txt"
     test_cases:
       match_cases:
-        - '"accessToken": "123123123123123123123123123123123123"'
+        - blank
       fail_cases:
-        - '"accessToken": $AZURE_ACCESS_TOKEN'
+        - blank
     patterns:
-      - '(?i)(''|"){0,2}(refreshtoken|accesstoken|_clientId)(''|"){0,2}:(\s*)(''|"){0,2}([0-9a-zA-Z!@#$&()\/\-`_.+,"]{20,})(''|"){0,2}'
-
+      - ""

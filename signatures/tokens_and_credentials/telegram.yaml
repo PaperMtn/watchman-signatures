@@ -1,15 +1,16 @@
 ---
-filename: twilio.yaml
+filename: telegram.yaml
 signatures:
 
-  - name: Twilio API Tokens
+  - name: Telegram Bot API Tokens
     status: enabled
     author: PaperMtn
     date: "2026-02-20"
-    description: Detects exposed Twilio API tokens
-    severity: "70"
+    description: Detects exposed Telegram Bot API tokens
     references:
-      - https://www.twilio.com/docs/iam/api-keys/key-resource-v1
+      - https://core.telegram.org/bots/api
+      - https://stackoverflow.com/questions/61868770/tegram-bot-api-token-format
+    severity: "70"
     notes:
     watchman_apps:
       slack_std:
@@ -18,8 +19,8 @@ signatures:
           - messages
         file_types:
         search_strings:
-          - api.twilio.com
-          - TWILIO_API
+          - api.telegram.org
+          - TELEGRAM_
       slack_eg:
         scope:
           - messages
@@ -30,8 +31,8 @@ signatures:
           - private
           - connect
         search_strings:
-          - api.twilio.com
-          - TWILIO_API
+          - api.telegram.org
+          - TELEGRAM_
       gitlab:
         scope:
           - blobs
@@ -43,14 +44,14 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - api.twilio.com
-          - twilio_*
+          - api.telegram.org -(svg|png|jpeg)
+          - TELEGRAM_ -(svg|png|jpeg)
     test_cases:
       match_cases:
-        - SK0123456789abcdef0123456789ABCDEF
-        - SKa1b2c3d4e5f6a7b8c9d0e1f2A3B4C5D6
+        - 123456789:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlll
+        - 9876543:abcdEFGHijklMNOPqrstUVWXyz0123456789_-
       fail_cases:
-        - SK_TEST_6f9cfc9d413272ec0a65f2fd1b14ab10
+        - 12345678910:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlll
     patterns:
-      - (^|[^A-Fa-f0-9])(SK[0-9a-fA-F]{32})($|[^A-Fa-f0-9])
+      - (^|[^0-9])([0-9]{5,10}:[A-Za-z0-9_-]{30,50})($|[^A-Za-z0-9_-])
 
