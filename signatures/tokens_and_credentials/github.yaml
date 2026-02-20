@@ -4,7 +4,7 @@ signatures:
 
   - name: GitHub API Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-12"
     description: Detects exposed GitHub API tokens
     reference:
@@ -68,7 +68,7 @@ signatures:
 
   - name: GitHub Fine-Grained Personal Access Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-12"
     description: Detects exposed Fine-Grained GitHub Personal Access Tokens (PATs)
     reference:

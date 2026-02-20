@@ -4,7 +4,7 @@ signatures:
 
   - name: AWS Access Key ID and Secret Access Key
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects exposed AWS access key IDs paired with a secret access key.
     severity: "90"
@@ -59,7 +59,7 @@ signatures:
 
   - name: AWS Session Token
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects exposed AWS session tokens (typically alongside temporary ASIA credentials).
     severity: "80"
@@ -105,7 +105,7 @@ signatures:
 
   - name: AWS CLI credentials/config file presence
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects presence of common AWS CLI credential/config artifacts in files.
     severity: "75"

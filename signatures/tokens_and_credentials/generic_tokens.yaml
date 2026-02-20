@@ -4,7 +4,7 @@ signatures:
 
   - name: Access Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects exposed access_tokens
     severity: "70"
@@ -52,7 +52,7 @@ signatures:
 
   - name: Bearer Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects exposed bearer tokens_and_credentials
     severity: "70"
@@ -98,7 +98,7 @@ signatures:
 
   - name: JSON Web Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-10"
     description: Detects exposed JWT tokens
     severity: "70"
@@ -144,7 +144,7 @@ signatures:
 
   - name: Client Secrets
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed client_secrets
     severity: "70"
@@ -192,7 +192,7 @@ signatures:
 
   - name: Private Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed private_tokens
     severity: "70"
@@ -215,7 +215,7 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          -
+          - PRIVATE
       slack_eg:
         scope:
           - messages
@@ -240,7 +240,7 @@ signatures:
 
   - name: X-API Keys
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-10-12"
     description: Detects exposed X-API keys
     severity: "70"
@@ -292,7 +292,7 @@ signatures:
 
   - name: X-Auth keys
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-10-12"
     description: Detects exposed X-Auth tokens
     severity: "70"

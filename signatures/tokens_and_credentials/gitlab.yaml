@@ -4,7 +4,7 @@ signatures:
 
   - name: GitLab API Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects Personal/Project/Group Access Tokens
     references:

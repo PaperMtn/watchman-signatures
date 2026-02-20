@@ -4,7 +4,7 @@ signatures:
 
   - name: Azure cscfg Files
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2022-12-23"
     description:
       Detects Azure Cloud Services configuration files that have potentially been exposed.
@@ -47,7 +47,7 @@ signatures:
 
   - name: Azure JWT access token
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects Azure/Microsoft identity access tokens that are JWT-shaped.
     severity: "85"
@@ -96,7 +96,7 @@ signatures:
 
   - name: Azure refresh token
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects Azure/Microsoft identity refresh tokens (opaque) using strong key context + length bounds.
     severity: "80"
@@ -145,7 +145,7 @@ signatures:
 
   - name: Azure CLI token file presence
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects presence of common Azure CLI local auth/cache artifacts in files.
     severity: "75"

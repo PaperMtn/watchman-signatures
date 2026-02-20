@@ -4,7 +4,7 @@ signatures:
 
   - name: Google API Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed API tokens for various Google services including Gemini, Google Maps, and YouTube
     severity: "70"
@@ -53,7 +53,7 @@ signatures:
 
   - name: GCP Service Account Files
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed GPC service account files
     severity: "90"
@@ -94,7 +94,7 @@ signatures:
 
   - name: GCP Service Accounts in Text
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2021-09-24"
     description: Detects exposed GPC service account credentials in text
     severity: "90"

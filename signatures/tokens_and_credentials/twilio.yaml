@@ -4,7 +4,7 @@ signatures:
 
   - name: Twilio API Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2026-02-20"
     description: Detects exposed Twilio API tokens
     severity: "70"

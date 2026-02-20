@@ -4,7 +4,7 @@ signatures:
 
   - name: Shodan API Tokens
     status: enabled
-    author: Andrew Byford
+    author: PaperMtn
     date: "2020-10-26"
     description: Detects exposed Shodan API tokens
     references:
