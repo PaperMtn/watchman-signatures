@@ -1,0 +1,54 @@
+---
+filename: gitlab.yaml
+signatures:
+
+  - name: GitLab API Tokens
+    status: enabled
+    author: Andrew Byford
+    date: "2026-02-20"
+    description: Detects Personal/Project/Group Access Tokens
+    references:
+      - https://docs.gitlab.com/api/admin/token
+      - https://stackoverflow.com/questions/62524667/gitlab-increase-number-of-characters-in-personal-access-token
+    severity: "70"
+    notes:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - glpat
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - glpat
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - glpat -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - glpat-ABCD1234efgh5678_IJKLmnoPQRSTuvwxYZ
+        - glpat-0123456789abcdefghijklmnopqrstuvwxyz_-ABCDE
+      fail_cases:
+        - glpat-ABCD1234efgh5678
+    patterns:
+      - (^|[^A-Za-z0-9_-])(glpat-[A-Za-z0-9_-]{20,200})($|[^A-Za-z0-9_-])
+

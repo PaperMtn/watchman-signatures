@@ -1,0 +1,57 @@
+---
+filename: telegram.yaml
+signatures:
+
+  - name: Telegram Bot API Tokens
+    status: enabled
+    author: Andrew Byford
+    date: "2026-02-20"
+    description: Detects exposed Telegram Bot API tokens
+    references:
+      - https://core.telegram.org/bots/api
+      - https://stackoverflow.com/questions/61868770/tegram-bot-api-token-format
+    severity: "70"
+    notes:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - api.telegram.org
+          - TELEGRAM_
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - api.telegram.org
+          - TELEGRAM_
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - api.telegram.org -(svg|png|jpeg)
+          - TELEGRAM_ -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - 123456789:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlll
+        - 9876543:abcdEFGHijklMNOPqrstUVWXyz0123456789_-
+      fail_cases:
+        - 12345678910:AAAbbbCCCdddEEEfffGGGhhhIIIjjjKKKlll
+    patterns:
+      - (^|[^0-9])([0-9]{5,10}:[A-Za-z0-9_-]{30,50})($|[^A-Za-z0-9_-])
+

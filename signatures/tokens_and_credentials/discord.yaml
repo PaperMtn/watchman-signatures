@@ -1,0 +1,57 @@
+---
+filename: discord.yaml
+signatures:
+
+  - name: Discord API Tokens
+    status: enabled
+    author: Andrew Byford
+    date: "2026-02-20"
+    description: Detects exposed MFA-enabled Discord API tokens
+    references:
+      - https://stackoverflow.com/questions/76498176/discord-tokens-regex
+      - https://sapphirejs.dev/docs/Documentation/api-utilities/@sapphire/discord-utilities/variables/TokenRegex/
+    severity: "70"
+    notes:
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        file_types:
+        search_strings:
+          - discord.com/api
+          - DISCORD_
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        file_types:
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - discord.com/api
+          - DISCORD_
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - milestones
+          - wiki_blobs
+          - issues
+          - merge_requests
+          - notes
+          - snippet_titles
+        search_strings:
+          - discord.com/api -(svg|png|jpeg)
+          - DISCORD_ -(svg|png|jpeg)
+    test_cases:
+      match_cases:
+        - mfa.aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv
+        - mfa.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-abcdefghijklmnopqrstuvwxyz0123456789
+      fail_cases:
+        - aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv
+    patterns:
+      - (^|[^A-Za-z0-9_.-])(mfa\.[A-Za-z0-9_-]{80,110})($|[^A-Za-z0-9_.-])
+
