@@ -3,6 +3,8 @@ import os
 import unittest
 from pathlib import Path
 
+from loguru import logger
+
 from models import signature_basic
 
 SIGNATURES_PATH = (Path(__file__).parents[1] / 'signatures').resolve()
@@ -54,29 +56,39 @@ class TestSigs(unittest.TestCase):
 
         sig_list = load_signatures_basic()
         for signature in sig_list:
-            for pattern in signature.patterns:
-                for test_case in signature.test_cases.match_cases:
-                    if not test_case == 'blank':
-                        self.assertRegex(
-                            test_case,
-                            pattern,
-                            msg='Regex does not detect given match case'
-                        )
+            try:
+                logger.info(f'Testing match cases for: {signature.name}')
+                for pattern in signature.patterns:
+                    for test_case in signature.test_cases.match_cases:
+                        if not test_case == 'blank':
+                            self.assertRegex(
+                                test_case,
+                                pattern,
+                                msg='Regex does not detect given match case'
+                            )
+            except Exception as e:
+                logger.error(f'Exception testing signature: {signature.name}: {e}')
+                self.assertTrue(False)
 
     def test_signature_failing_cases(self):
         """Test that the fail case strings don't match the regex. Skip if the fail case is 'blank'"""
 
         sig_list = load_signatures_basic()
         for signature in sig_list:
-            for pattern in signature.patterns:
-                if signature.test_cases.fail_cases:
-                    for test_case in signature.test_cases.fail_cases:
-                        if not test_case == 'blank':
-                            self.assertNotRegex(
-                                test_case,
-                                pattern,
-                                msg='Regex does detect given failure case, it should not'
-                            )
+            try:
+                logger.info(f'Testing fail cases for: {signature.name}')
+                for pattern in signature.patterns:
+                    if signature.test_cases.fail_cases:
+                        for test_case in signature.test_cases.fail_cases:
+                            if not test_case == 'blank':
+                                self.assertNotRegex(
+                                    test_case,
+                                    pattern,
+                                    msg=f'Regex for {signature.name} does detect given failure case, it should not'
+                                )
+            except Exception as e:
+                logger.error(f'Exception testing signature: {signature.name}: {e}')
+                self.assertTrue(False)
 
 
 if __name__ == '__main__':
