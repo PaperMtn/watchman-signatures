@@ -3,21 +3,15 @@ filename: snyk.yaml
 signatures:
 
   - name: Snyk API Tokens
-    id: tokens_snyk_api
     status: enabled
-    author: PaperMtn
-    date: "2021-10-12"
+    author: Andrew Byford
+    date: "2026-02-20"
     description: Detects exposed Snyk API OAuth tokens
     severity: "90"
-    notes:
     references:
+      - https://docs.snyk.io/snyk-api/authentication-for-api
+    notes:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - snyk
       slack_std:
         category: secrets
         scope:
@@ -50,10 +44,13 @@ signatures:
           - 'snyk_*'
     test_cases:
       match_cases:
-        - "Authorization: token c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
-        - "apikey: c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
+        - "Authorization: token 3f1c2d3e-4a5b-4c6d-9e0f-1a2b3c4d5e6f"
+        - "authorization: token 9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d"
+        - "SNYK_TOKEN=7b9a0c1d-2e3f-4a5b-9c6d-0e1f2a3b4c5d"
+        - "SNYK_TOKEN: HRnXkPz3cQeR7mT9vW2yE4iO6aBcDeFgHiJkLmNoPqRsTuV"
+        - "Authorization: bearer aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBbCcDdEeFf"
       fail_cases:
         - "c1427dab-3e2f-4439-8e73-26b3e5ce9f55"
     patterns:
-      - '(?i)(''|"){0,2}((token|key)|Authorization: Token )(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9a-zA-Z-_]{20,40})(''|"){0,2}'
+      - (?i)(^|[^A-Za-z0-9_])(?:SNYK_TOKEN|Authorization\s*:\s*(?:token|bearer))\s*(?:=|:)?\s*([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|[A-Za-z0-9_-]{30,120})($|[^A-Za-z0-9_])
 

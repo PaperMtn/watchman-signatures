@@ -2,71 +2,15 @@
 filename: new_relic.yaml
 signatures:
 
-  - name: New Relic API Tokens
-    id: tokens_new_relic_api
-    status: enabled
-    author: PaperMtn
-    date: "2021-10-12"
-    description: Detects exposed New Relic API tokens
-    severity: "90"
-    notes:
-    references:
-    watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - api.newrelic.com
-          - relic
-          - 'X-Api-Key'
-      slack_std:
-        category: secrets
-        scope:
-          - messages
-        file_types:
-        search_strings:
-          - relic
-      slack_eg:
-        scope:
-          - messages
-          - drafts
-        file_types:
-        locations:
-          - public
-          - private
-          - connect
-        search_strings:
-          - relic
-      gitlab:
-        scope:
-          - blobs
-          - commits
-          - milestones
-          - wiki_blobs
-          - issues
-          - merge_requests
-          - notes
-          - snippet_titles
-        search_strings:
-          - 'relic_* -(svg|png|jpeg)'
-    test_cases:
-      match_cases:
-        - "'X-Api-Key': '8ETcQQkZ0nsAeRX1Hqpt9MS8xnxdYDlmMAu1DgLmnq8U2r2'"
-      fail_cases:
-        - "ENV NEWRELIC_KEY=$NEWRELIC_KEY"
-    patterns:
-      - '(?i)(''|"){0,2}((token|key)|X-Api-Key)(''|"){0,2}\s*(=|:|\s*)(\s*)(''|"){0,2}([0-9a-zA-Z]{40,47})(''|"){0,2}'
-
   - name: New Relic API Tokens (Prefixed)
-    id: tokens_new_relic_api_prefixed
     status: enabled
-    author: PaperMtn
-    date: "2021-10-12"
+    author: Andrew Byford
+    date: "2026-02-20"
     description: Detects exposed New Relic API Tokens (Prefixed)
     severity: "90"
-    notes:
     references:
+      - https://registry.terraform.io/providers/newrelic/newrelic/3.76.3/docs/guides/migration_guide_v2
+    notes:
     watchman_apps:
       slack_eg:
         scope:
@@ -78,7 +22,7 @@ signatures:
           - private
           - connect
         search_strings:
-          - nrra
+          - nrak
       gitlab:
         scope:
           - blobs
@@ -90,11 +34,12 @@ signatures:
           - notes
           - snippet_titles
         search_strings:
-          - 'nrra -(svg|png|jpeg)'
+          - 'nrak -(svg|png|jpeg)'
     test_cases:
       match_cases:
-        - "APIKEY: NRRA-6baa13a5c9e652b3bdfeb7c7cde9056c381a190de9"
+        - NRAK-aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789_-AaBb
+        - NRAK-0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-
       fail_cases:
         - "NRRA-0TBbaAQApxx6ykLgRElSk8UuMVWn02qUZgSu4C58Jc"
     patterns:
-      - "(?i)NRRA-[a-f0-9]{42}"
+      - (?i)(^|[^A-Za-z0-9_-])(NRAK-[A-Za-z0-9_-]{20,120})($|[^A-Za-z0-9_-])

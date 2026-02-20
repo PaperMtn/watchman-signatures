@@ -3,19 +3,14 @@ filename: shodan.yaml
 signatures:
 
   - name: Shodan API Tokens
-    id: tokens_shodan_api
     status: enabled
-    author: PaperMtn
+    author: Andrew Byford
     date: "2020-10-26"
     description: Detects exposed Shodan API tokens
+    references:
+      - https://developer.shodan.io/api
     severity: "70"
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - shodan.io
       slack_std:
         category: secrets
         scope:
@@ -49,9 +44,12 @@ signatures:
           - shodan_*
     test_cases:
       match_cases:
-        - aabbccddeeff111111111111aabbccdd
+        - "SHODAN_API_KEY=AbCdEfGhIjKlMnOpQrStUvWxYz012345"
+        - "SHODAN_APIKEY: 0123456789ABCDEfghijkLMNOPqrstUV"
+        - "https://api.shodan.io/account/profile?key=AbCdEfGhIjKlMnOpQrStUvWxYz012345"
+        - "https://api.shodan.io/shodan/host/1.1.1.1?key=0123456789ABCDEfghijkLMNOPqrstUV"
       fail_cases:
-        - ddeeff111111111111aabbccddeeff
+        - AbCdEfGhIjKlMnOpQrStUvWxYz012345
     patterns:
-      - "[0-9A-Za-z]{32}"
+      - (?i)(^|[^A-Za-z0-9_])(?:SHODAN_API(?:_|)?KEY|https?://api\.shodan\.io[^\s"'<>]{0,200}[?&]key)\s*(?:=|:)?\s*([A-Za-z0-9]{32})($|[^A-Za-z0-9_])
 

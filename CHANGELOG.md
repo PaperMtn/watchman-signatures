@@ -1,3 +1,24 @@
+## 2026-02-20
+### Added
+- Added signatures for
+  - Telegram Bot tokens
+  - Discord tokens
+  - GitLab tokens
+
+### Changed
+- New regex to match updated token formats for:
+  - AWS
+  - Azure
+  - Generic Tokens
+  - Cloudflare
+  - Twilio
+  - Stripe
+  - Shodan
+  - NewRelic
+  - Heroku
+  - Google
+  - GitHub
+
 ## 2024-11-29
 ### Changed
 - Update regex for Slack Webhooks

@@ -3,22 +3,14 @@ filename: google.yaml
 signatures:
 
   - name: Google API Tokens
-    id: tokens_google_api
     status: enabled
-    author: PaperMtn
+    author: Andrew Byford
     date: "2021-09-24"
-    description: Detects exposed API tokens for various Google services
+    description: Detects exposed API tokens for various Google services including Gemini, Google Maps, and YouTube
     severity: "70"
+    references:
+      - https://docs.cloud.google.com/docs/authentication/api-keys
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-          - googleapis.com
-          - google.com
-          - google
-          - googleapis
       slack_std:
         category: secrets
         scope:
@@ -57,24 +49,17 @@ signatures:
       fail_cases:
         - '"current_key": $GOOGLE_AIZA_KEY'
     patterns:
-      - 'AIza[0-9A-Za-z\\-_]{35}|[0-9]+-[0-9A-Za-z_]{32}'
+      - (^|[^A-Za-z0-9_-])AIza[A-Za-z0-9_-]{35}($|[^A-Za-z0-9_-])
 
   - name: GCP Service Account Files
-    id: tokens_google_service_account_files
     status: enabled
-    author: PaperMtn
+    author: Andrew Byford
     date: "2021-09-24"
     description: Detects exposed GPC service account files
     severity: "90"
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-            - iam.gserviceaccount.com
       slack_std:
         category: secrets
         scope:
@@ -108,22 +93,14 @@ signatures:
       - '(?s)(-----BEGIN .+?-----)\\S{0,}'
 
   - name: GCP Service Accounts in Text
-    id: tokens_google_service_accounts_text
     status: enabled
-    author: PaperMtn
+    author: Andrew Byford
     date: "2021-09-24"
     description: Detects exposed GPC service account credentials in text
     severity: "90"
     notes:
     references:
     watchman_apps:
-      stack_overflow:
-        scope:
-          - questions
-          - answers
-        search_strings:
-            - iam.gserviceaccount.com
-            - "-----BEGIN PRIVATE KEY -----"
       slack_std:
         category: secrets
         scope:
