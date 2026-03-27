@@ -1,0 +1,58 @@
+---
+filename: huggingface.yaml
+signatures:
+
+  - name: Hugging Face User Access Token
+    status: enabled
+    author: PaperMtn
+    date: "2026-03-27"
+    description: Detects exposed Hugging Face user access tokens.
+    references:
+      - https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables
+      - https://huggingface.co/docs/hub/en/security-tokens.md
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        search_strings:
+          - hf_
+          - HF_TOKEN
+          - huggingface.co
+          - Authorization: Bearer
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - hf_
+          - HF_TOKEN
+          - huggingface.co
+          - Authorization: Bearer
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - issues
+          - merge_requests
+          - notes
+        search_strings:
+          - 'hf_'
+          - 'HF_TOKEN'
+          - 'huggingface.co'
+          - 'Authorization: Bearer'
+    test_cases:
+      match_cases:
+        - 'HF_TOKEN=hf_abcdefghijklmnopqrstuvwxyz1234567890ABCD'
+        - 'token: "hf_1234567890abcdefghijklmnopqrstuvwxyzABCD"'
+      fail_cases:
+        - 'HF_TOKEN=$HF_TOKEN'
+        - 'token: hf_short'
+        - 'Authorization: Bearer not-a-huggingface-token'
+    patterns:
+      - (^|[^A-Za-z0-9_])(hf_[A-Za-z0-9]{30,})($|[^A-Za-z0-9_])
