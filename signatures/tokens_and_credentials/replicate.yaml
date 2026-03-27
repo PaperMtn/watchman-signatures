@@ -1,0 +1,47 @@
+---
+filename: replicate.yaml
+signatures:
+
+  - name: Replicate API Token
+    status: enabled
+    author: PaperMtn
+    date: "2026-03-27"
+    description: Detects exposed Replicate API tokens.
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        search_strings:
+          - r8_
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - r8_
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - issues
+          - merge_requests
+          - notes
+        search_strings:
+          - r8_*
+    test_cases:
+      match_cases:
+        - 'REPLICATE_API_TOKEN=r8_abcdefghijklmnopqrstuvwxyz1234567890ABCD'
+        - 'Authorization: Bearer r8_1234567890abcdefghijklmnopqrstuvwxyzABCD'
+        - 'Authorization: Token r8_AbCdEfGhIjKlMnOpQrStUvWxYz0123456789'
+      fail_cases:
+        - 'REPLICATE_API_TOKEN=$REPLICATE_API_TOKEN'
+        - 'Authorization: Bearer r8_short'
+        - 'Authorization: Bearer not-a-replicate-token'
+    patterns:
+      - (^|[^A-Za-z0-9_])(r8_[A-Za-z0-9]{20,})($|[^A-Za-z0-9_])
