@@ -1,0 +1,99 @@
+---
+filename: anthropic.yaml
+signatures:
+
+  - name: Anthropic API Key
+    status: enabled
+    author: PaperMtn
+    date: "2026-03-27"
+    description: Detects exposed Anthropic API keys.
+    references:
+      - https://platform.claude.com/docs/en/api/overview
+    severity: "90"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        search_strings:
+          - ANTHROPIC_API_KEY
+          - sk-ant-api
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ANTHROPIC_API_KEY
+          - sk-ant-api
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - issues
+          - merge_requests
+          - notes
+        search_strings:
+          - 'ANTHROPIC_API_KEY'
+          - sk-ant-api*
+    test_cases:
+      match_cases:
+        - 'ANTHROPIC_API_KEY=sk-ant-api03-AbCdEfGhIjKlMnOpQrStUvWxYz0123456789'
+        - 'X-Api-Key: "sk-ant-api03-a1B2c3D4e5F6g7H8i9J0kLmNoPqRsTuVwXyZ_-"'
+      fail_cases:
+        - 'ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY'
+        - 'X-Api-Key: not-an-anthropic-key'
+        - 'sk-ant-admin-abcdef1234567890'
+    patterns:
+      - (^|[^A-Za-z0-9_-])(sk-ant-api03-[A-Za-z0-9_-]{20,200})($|[^A-Za-z0-9_-])
+
+  - name: Anthropic Admin API Key
+    status: enabled
+    author: PaperMtn
+    date: "2026-03-27"
+    description: Detects exposed Anthropic Admin API keys.
+    references:
+      - https://platform.claude.com/docs/en/build-with-claude/administration-api
+    severity: "95"
+    watchman_apps:
+      slack_std:
+        category: secrets
+        scope:
+          - messages
+        search_strings:
+          - ANTHROPIC_ADMIN_API_KEY
+          - sk-ant-admin
+      slack_eg:
+        scope:
+          - messages
+          - drafts
+        locations:
+          - public
+          - private
+          - connect
+        search_strings:
+          - ANTHROPIC_ADMIN_API_KEY
+          - sk-ant-admin
+      gitlab:
+        scope:
+          - blobs
+          - commits
+          - issues
+          - merge_requests
+          - notes
+        search_strings:
+          - 'ANTHROPIC_ADMIN_API_KEY'
+          - sk-ant-admin*
+    test_cases:
+      match_cases:
+        - 'ANTHROPIC_ADMIN_API_KEY=sk-ant-admin-abcdef1234567890ZYXWVUTSRQPONMLKJIHG'
+        - 'X-Api-Key: "sk-ant-admin-a1B2c3D4e5F6g7H8i9J0kLmNoPqRsTuVwXyZ_-"'
+      fail_cases:
+        - 'ANTHROPIC_ADMIN_API_KEY=$ANTHROPIC_ADMIN_API_KEY'
+        - 'X-Api-Key: sk-ant-api03-AbCdEfGhIjKlMnOpQrStUvWxYz0123456789'
+        - 'X-Api-Key: not-an-admin-key'
+    patterns:
+      - (^|[^A-Za-z0-9_-])(sk-ant-admin-[A-Za-z0-9_-]{20,200})($|[^A-Za-z0-9_-])
