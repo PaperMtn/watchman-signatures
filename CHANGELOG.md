@@ -1,3 +1,19 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 2026-03-27
+### Added
+- Added signatures for:
+  - Anthropic Claude tokens
+  - Hugging Face tokens
+  - Replicate tokens
+
+### Changed
+- Updated Google signature to catch Gemini tokens
+
 ## 2026-02-20
 ### Added
 - Added signatures for

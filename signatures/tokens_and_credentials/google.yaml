@@ -5,25 +5,29 @@ signatures:
   - name: Google API Tokens
     status: enabled
     author: PaperMtn
-    date: "2021-09-24"
-    description: Detects exposed API tokens for various Google services including Gemini, Google Maps, and YouTube
+    date: "2026-03-27"
+    description: Detects exposed API keys for Google services including Gemini, Google Maps, and YouTube
     severity: "70"
     references:
       - https://docs.cloud.google.com/docs/authentication/api-keys
+      - https://ai.google.dev/gemini-api/docs/api-key
     watchman_apps:
       slack_std:
         category: secrets
         scope:
           - messages
-        file_types:
         search_strings:
           - AIza
           - .apps.googleusercontent.com
+          - GEMINI_API_KEY
+          - ai.google.dev
+          - api.generativelanguage.googleapis.com
+          - generativelanguage.googleapis.com
+          - Google AI Studio
       slack_eg:
         scope:
           - messages
           - drafts
-        file_types:
         locations:
           - public
           - private
@@ -31,6 +35,10 @@ signatures:
         search_strings:
           - AIza
           - .apps.googleusercontent.com
+          - GEMINI_API_KEY
+          - ai.google.dev
+          - api.generativelanguage.googleapis.com
+          - generativelanguage.googleapis.com
       gitlab:
         scope:
           - blobs
@@ -43,11 +51,16 @@ signatures:
           - snippet_titles
         search_strings:
           - 'AIza -(html|svg|png|jpeg)'
+          - 'GEMINI_API_KEY'
+          - 'ai.google.dev'
+          - 'api.generativelanguage.googleapis.com'
     test_cases:
       match_cases:
         - '"current_key": "AIzaABABABABABABABABABABABABABABABABABA"'
+        - 'GEMINI_API_KEY=AIzaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe'
       fail_cases:
         - '"current_key": $GOOGLE_AIZA_KEY'
+        - 'GEMINI_API_KEY=$GEMINI_API_KEY'
     patterns:
       - (^|[^A-Za-z0-9_-])AIza[A-Za-z0-9_-]{35}($|[^A-Za-z0-9_-])
 
